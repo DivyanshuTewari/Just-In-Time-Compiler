@@ -468,3 +468,20 @@ if __name__ == "__main__":
     func = jit_compile(expr)
     print(f"{expr} = {func()}")
 
+    expr = "(10-2)/4"
+    func = jit_compile(expr)
+    print(f"{expr} = {func()}")
+
+    expr = "a=5; b=3; a*b + 2"
+    func = jit_compile(expr)
+    print(f"{expr} = {func()}")
+
+    expr = 's="Hello, World!"; s'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
+
+    expr = '"Test string literal"'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
