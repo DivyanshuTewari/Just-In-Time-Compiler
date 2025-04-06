@@ -109,3 +109,21 @@ def p_error(p):
 
 parser = yacc.yacc(start='program')
 
+# --------------------------
+# String Buffer Management
+# --------------------------
+STATIC_STRING_BUFFER_SIZE = 4096
+_static_string_buffer = ctypes.create_string_buffer(STATIC_STRING_BUFFER_SIZE)
+_static_string_next = 0
+
+def allocate_static_string(s):
+    global _static_string_next
+    n = len(s)
+    if _static_string_next + n > STATIC_STRING_BUFFER_SIZE:
+        raise RuntimeError("Static string buffer overflow")
+    offset = _static_string_next
+    ctypes.memmove(ctypes.addressof(_static_string_buffer) + offset, s, n)
+    _static_string_next += n
+    return ctypes.addressof(_static_string_buffer) + offset
+
+
