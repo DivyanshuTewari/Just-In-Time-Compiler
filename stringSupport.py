@@ -126,4 +126,34 @@ def allocate_static_string(s):
     _static_string_next += n
     return ctypes.addressof(_static_string_buffer) + offset
 
+def get_string(addr):
+    return ctypes.string_at(addr)
+
+def is_string_node(node, context):
+    if isinstance(node, String):
+        return True
+    if isinstance(node, Identifier):
+        return node.name in context['string_vars']
+    if isinstance(node, BinOp) and node.op == '+':
+        return is_string_node(node.left, context) and is_string_node(node.right, context)
+    return False
+
+def eval_string_node(node, context):
+    if isinstance(node, String):
+        return node.value
+    elif isinstance(node, Identifier):
+        addr = context['variables'][node.name]
+        return ctypes.string_at(addr)
+    elif isinstance(node, BinOp) and node.op == '+':
+        left = eval_string_node(node.left, context)
+        right = eval_string_node(node.right, context)
+        if left.endswith(b'\x00'):
+            left = left[:-1]
+        return left + right
+    else:
+        raise RuntimeError("Not a string node")
+
+# --------------------------
+# Code Generation (AST → x86_64 Assembly)
+# --------------------------
 
