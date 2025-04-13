@@ -154,5 +154,86 @@ class JITCompilerGUI:
         self.output.config(state=tk.DISABLED)
         self.status("Cleared.")
 
+    def save_code(self):
+        code = self.editor.get("1.0", tk.END)
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".jit",
+            filetypes=[("JIT Code", "*.jit"), ("All files", "*.*")]
+        )
+        if filename:
+            with open(filename, "w") as f:
+                f.write(code)
+            self.status(f"Saved to {filename}")
 
+    def load_code(self):
+        filename = filedialog.askopenfilename(
+            filetypes=[("JIT Code", "*.jit"), ("All files", "*.*")]
+        )
+        if filename:
+            with open(filename, "r") as f:
+                code = f.read()
+            self.editor.delete("1.0", tk.END)
+            self.editor.insert(tk.END, code)
+            self.highlight_syntax()
+            self.status(f"Loaded from {filename}")
+
+    def show_assembly(self):
+        code = self.editor.get("1.0", tk.END).strip()
+        try:
+            ast = parser.parse(code)
+            context = {
+                'variables': {},
+                'string_vars': set(),
+                'string_buffer_offsets': {},
+                'stack_offset': 0,
+                'concat_buffers': [],
+                'var_offsets': {}
+            }
+            
+            # Preprocess all string literals for buffer allocation
+            def collect_strings(node):
+                if isinstance(node, String):
+                    if node.value not in context['string_buffer_offsets']:
+                        addr = allocate_static_string(node.value)
+                        context['string_buffer_offsets'][node.value] = addr
+                elif isinstance(node, BinOp):
+                    collect_strings(node.left)
+                    collect_strings(node.right)
+                elif isinstance(node, UnOp):
+                    collect_strings(node.val)
+                elif isinstance(node, IfElse):
+                    collect_strings(node.cond)
+                    collect_strings(node.then_expr)
+                    collect_strings(node.else_expr)
+                elif isinstance(node, list):
+                    for n in node:
+                        collect_strings(n)
+                elif isinstance(node, tuple) and node[0] == 'assign':
+                    collect_strings(node[2])
+            
+            collect_strings(ast)
+            
+            asm = []
+            if isinstance(ast, list):
+                for node in ast:
+                    asm += compile_ast(node, context)
+            else:
+                asm = compile_ast(ast, context)
+            
+            asm_text = "\n".join(asm)
+            self.show_popup("Generated Assembly", asm_text)
+        except Exception as e:
+            self.show_popup("Assembly Error", str(e))
+
+    def show_popup(self, title, content):
+        win = tk.Toplevel(self.root)
+        win.title(title)
+        txt = tk.Text(win, wrap=tk.NONE, font=("Consolas", 12))
+        txt.insert(tk.END, content)
+        txt.pack(fill=tk.BOTH, expand=True)
+        txt.config(state=tk.DISABLED)
+        win.geometry("600x400")
+
+    def status(self, msg):
+        self.statusbar.config(text=msg)   
             
