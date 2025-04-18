@@ -255,8 +255,7 @@ def assemble(assembly):
         'mov rbp, rsp': b'\x48\x89\xE5',
         'mov rsp, rbp': b'\x48\x89\xEC',
         'lea rax, mem': b'\x48\x8D\x85',
-        'lea rcx, mem': b'\x48\x8D\x8D',
-        'mov byte ptr': b'\xC6\x85',
+        'lea rcx, mem': b'\x48\x8D\x8D',        'mov byte ptr': b'\xC6\x85',
         'ret': b'\xC3',
         'sub rsp, imm': b'\x48\x81\xec',
         'mov rcx, rax': b'\x48\x89\xc1',
@@ -369,6 +368,7 @@ def jit_compile(expression, variables=None, debug=False):
 
     for stmt in ast_list:
         collect_vars(stmt)
+
 
     if offset % 16 != 0:
         offset += (16 - (offset % 16))
