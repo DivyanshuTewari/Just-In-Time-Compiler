@@ -153,36 +153,8 @@ def eval_string_node(node, context):
     else:
         raise RuntimeError("Not a string node")
 
-# --------------------------
-# Code Generation (AST → x86_64 Assembly)
-# --------------------------
-def compile_ast(node, context, reg='rax'):
-    code = []
-    if isinstance(node, Number):
-        code.append(f"mov {reg}, {node.value}")
-    elif isinstance(node, String):
-        addr = context['string_buffer_offsets'][node.value]
-        code.append(f"mov {reg}, {addr}")
-    elif isinstance(node, Identifier):
-        if node.name in context['string_vars']:
-            addr = context['variables'][node.name]
-            code.append(f"mov {reg}, {addr}")
-        elif line == "mov rax, rax":
-            machine_code += opcodes['mov rax, rax']
-        elif line.startswith("mov rax,") and '[' not in line:
-            arg = line.split(',')[1].strip()
-            if arg.isdigit() or (arg[0] == '-' and arg[1:].isdigit()):
-                imm = int(arg)
-                i3647:
-                    machine_code += opcodes['mov rax, imm'] + struct.pack('<i', imm)
-                else:
-                    machine_code += opcodes['mov rax, imm64'] + struct.pack('<Q', imm)
-            else:
-                raise ValueError(f"Unknown or unsupported mov rax, {arg}")
-        elif line.startswith("mov rcx,") and '[' not in line:
-            arg = line.split(',')[1].strip()
-            if arg.isdigit() or (arg[0] == '-' and arg[1:].isdigit()):
-ct.pack('<i', imm)
-        elif line.startswith("lea rax, [rbp -"):
+# -
+
+
 
 
