@@ -138,19 +138,7 @@ def is_string_node(node, context):
         return is_string_node(node.left, context) and is_string_node(node.right, context)
     return False
 
-def eval_string_node(node, context):
-    if isinstance(node, String):
-        return node.value
-    elif isinstance(node, Identifier):
-        addr = context['variables'][node.name]
-        return ctypes.string_at(addr)
-    elif isinstance(node, BinOp) and node.op == '+':
-        left = eval_string_node(node.left, context)
-        right = eval_string_node(node.right, context)
-        if left.endswith(b'\x00'):
-            left = left[:-1]
-        return left + right
-    else:
+d
         raise RuntimeError("Not a string node")
 
 # -
