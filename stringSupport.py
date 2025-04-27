@@ -43,47 +43,8 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# --------------------------
-# Parser (AST Generation)
-# --------------------------
-class Number:
-    def __init__(self, value): self.value = value
-class Identifier:
-    def __init__(self, name): self.name = name
-class String:
-    def __init__(self, value): self.value = value
-class BinOp:
-    def __init__(self, left, op, right): self.left = left; self.op = op; self.right = right
 
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MUL', 'DIV'),
-    ('nonassoc', 'LPAREN', 'RPAREN')
-)
 
-def p_program(p):
-    '''program : statement
-               | statement program'''
-    if len(p) == 2: p[0] = [p[1]]
-    else: p[0] = [p[1]] + p[2]
-
-def p_statement(p):
-    '''statement : assignment
-                 | expression SEMICOLON
-                 | expression'''
-    p[0] = p[1]
-
-def p_assignment(p):
-    'assignment : IDENTIFIER EQUALS expression SEMICOLON'
-    p[0] = ('assign', p[1], p[3])
-
-    'factor : LPAREN expression RPAREN'
-    p[0] = p[2]
-
-def p_error(p):
-    print(f"Syntax error at '{getattr(p, 'value', '?')}'")
-
-parser = yacc.yacc(start='program')
 
 # --------------------------
 # String Buffer Management
