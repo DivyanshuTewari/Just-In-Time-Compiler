@@ -94,8 +94,8 @@ class JITCompilerGUI:
             self.editor.insert("1.0", code)
             self.highlight_syntax()
  
-    def run(self):
-        code = self.editor.get("1.0", tk.END).strip()
+    def run(self):git 
+    code = self.editor.get("1.0", tk.END).strip()
         self.status("Running...")
         self.output.config(state=tk.NORMAL)
         self.output.delete("1.0", tk.END)
@@ -108,22 +108,7 @@ class JITCompilerGUI:
                 'string_buffer_offsets': {},
                 'stack_offset': 0,
                 'concat_buffers': [],
-                'var_offsets': {}
-            }
-            
-            # Preprocess all string literals for buffer allocation
-            def collect_strings(node):
-                if isinstance(node, String):
-                    if node.value not in context['string_buffer_offsets']:
-                        addr = allocate_static_string(node.value)
-                        context['string_buffer_offsets'][node.value] = addr
-                elif isinstance(node, BinOp):
-                    collect_strings(node.left)
-                    collect_strings(node.right)
-                elif isinstance(node, UnOp):
-                    collect_strings(node.val)
-                elif isinstance(node, IfElse):
-                    collect_strings(node.cond)
+
                     collect_strings(node.then_expr)
                     collect_strings(node.else_expr)
                 elif isinstance(node, list):
