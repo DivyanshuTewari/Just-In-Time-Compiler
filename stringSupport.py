@@ -77,30 +77,6 @@ def p_assignment(p):
     'assignment : IDENTIFIER EQUALS expression SEMICOLON'
     p[0] = ('assign', p[1], p[3])
 
-def p_expression_binop(p):
-    '''expression : expression PLUS expression
-                  | expression MINUS expression
-                  | expression MUL expression
-                  | expression DIV expression'''
-    p[0] = BinOp(p[1], p[2], p[3])
-
-def p_expression_factor(p):
-    'expression : factor'
-    p[0] = p[1]
-
-def p_factor_number(p):
-    'factor : NUMBER'
-    p[0] = Number(p[1])
-
-def p_factor_identifier(p):
-    'factor : IDENTIFIER'
-    p[0] = Identifier(p[1])
-
-def p_factor_string(p):
-    'factor : STRING'
-    p[0] = String(p[1])
-
-def p_factor_expr(p):
     'factor : LPAREN expression RPAREN'
     p[0] = p[2]
 
