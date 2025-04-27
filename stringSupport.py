@@ -129,17 +129,6 @@ def allocate_static_string(s):
 def get_string(addr):
     return ctypes.string_at(addr)
 
-def is_string_node(node, context):
-    if isinstance(node, String):
-        return True
-    if isinstance(node, Identifier):
-        return node.name in context['string_vars']
-    if isinstance(node, BinOp) and node.op == '+':
-        return is_string_node(node.left, context) and is_string_node(node.right, context)
-    return False
-
-d
-        raise RuntimeError("Not a string node")
 
 # -
 
