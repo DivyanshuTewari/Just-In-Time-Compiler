@@ -251,26 +251,6 @@ def jit_compile(expression, variables=None, debug=False):
     for stmt in ast_list:
         collect_strings(stmt)
 
-    def collect_vars(node):
-        nonlocal offset
-        if isinstance(node, tuple) and node[0] == 'assign':
-            var = node[1]
-            val = node[2]
-            if not is_string_node(val, {'string_vars': set()}):
-                if var not in var_offsets:
-                    var_offsets[var] = offset
-                    offset += 8
-        elif isinstance(node, BinOp):
-            collect_vars(node.left)
-            collect_vars(node.right)
 
-    for stmt in ast_list:
-        collect_vars(stmt)
-
-
-    if offset % 16 != 0:
-        offset += (16 - (offset % 16))
-
-    context = {
         'variables': variables,
 
