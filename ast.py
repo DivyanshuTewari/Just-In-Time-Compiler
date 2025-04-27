@@ -7,6 +7,7 @@ function = ir.Function(module, func_type, name="main")
 block = function.append_basic_block(name="entry")
 builder = ir.IRBuilder(block)
 
+
 def compile_expr(expr):
     if isinstance(expr, Number):
         return ir.Constant(ir.DoubleType(), expr.value)
