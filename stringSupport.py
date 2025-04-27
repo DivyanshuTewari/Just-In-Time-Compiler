@@ -182,24 +182,7 @@ def compile_ast(node, context, reg='rax'):
         elif line.startswith("mov rcx,") and '[' not in line:
             arg = line.split(',')[1].strip()
             if arg.isdigit() or (arg[0] == '-' and arg[1:].isdigit()):
-                imm = int(arg)
-                machine_code += opcodes['mov rcx, imm'] + struct.pack('<i', imm)
-            elif arg == 'rax':
-                machine_code += opcodes['mov rcx, rax']
-            else:
-                raise ValueError(f"Unknown or unsupported mov rcx, {arg}")
-        elif line.startswith("mov rax, [rbp -"):
-            offset = int(line.split('-')[1].split(']')[0].strip())
-            machine_code += opcodes['mov rax, mem'] + struct.pack('<i', -offset)
-        elif line.startswith("mov rcx, [rbp -"):
-            offset = int(line.split('-')[1].split(']')[0].strip())
-            machine_code += opcodes['mov rcx, mem'] + struct.pack('<i', -offset)
-        elif line.startswith("mov [rbp -"):
-            offset = int(line.split('-')[1].split(']')[0].strip())
-            machine_code += opcodes['mov mem, rax'] + struct.pack('<i', -offset)
-        elif line.startswith("sub rsp,"):
-            imm = int(line.split(',')[1].strip())
-            machine_code += opcodes['sub rsp, imm'] + struct.pack('<i', imm)
+ct.pack('<i', imm)
         elif line.startswith("lea rax, [rbp -"):
 
 
