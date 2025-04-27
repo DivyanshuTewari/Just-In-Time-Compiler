@@ -201,42 +201,5 @@ def compile_ast(node, context, reg='rax'):
             imm = int(line.split(',')[1].strip())
             machine_code += opcodes['sub rsp, imm'] + struct.pack('<i', imm)
         elif line.startswith("lea rax, [rbp -"):
-            offset = int(line.split('-')[1].split(']')[0].strip())
-            machine_code += opcodes['lea rax, mem'] + struct.pack('<i', -offset)
-        elif line.startswith("lea rcx, [rbp -"):
-            offset = int(line.split('-')[1].split(']')[0].strip())
-            machine_code += opcodes['lea rcx, mem'] + struct.pack('<i', -offset)
-        elif line.startswith("mov byte ptr [rbp -"):
-            m = re.match(r"mov byte ptr \[rbp - (\d+)\s*\+\s*(\d+)\],\s*(\d+)", line)
-            if m:
-                base = int(m.group(1))
-                plus = int(m.group(2))
-                offset = base + plus
-                imm = int(m.group(3))
-            else:
-                m = re.match(r"mov byte ptr \[rbp - (\d+)\],\s*(\d+)", line)
-                if not m:
-                    raise ValueError(f"Unknown instruction: {line}")
-                offset = int(m.group(1))
-                imm = int(m.group(2))
-            machine_code += opcodes['mov byte ptr'] + struct.pack('<i', -offset) + bytes([imm])
-        else:
-            raise ValueError(f"Unknown instruction: {line}")
-    return bytes(machine_code)
 
-def jit_compile(expression, variables=None, debug=False):
-    global _static_string_next
-    lexer.input(expression)
-    ast_list = parser.parse(expression)
-    if ast_list is None:
-        raise ValueError("Parsing failed, no AST generated")
-
-    _static_string_next = 0
-    string_buffer_offsets = {}
-    var_offsets = {}
-    variables = {} if variables is None else variables.copy()
-    string_vars = set()
-    offset = 16
-
-    def collect_strings(node):
 
