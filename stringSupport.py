@@ -239,18 +239,4 @@ def jit_compile(expression, variables=None, debug=False):
     offset = 16
 
     def collect_strings(node):
-        if isinstance(node, String):
-            if node.value not in string_buffer_offsets:
-                string_buffer_offsets[node.value] = allocate_static_string(node.value)
-        elif isinstance(node, BinOp):
-            collect_strings(node.left)
-            collect_strings(node.right)
-        elif isinstance(node, tuple) and node[0] == 'assign':
-            collect_strings(node[2])
-
-    for stmt in ast_list:
-        collect_strings(stmt)
-
-
-        'variables': variables,
 
