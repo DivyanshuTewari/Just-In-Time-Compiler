@@ -225,15 +225,5 @@ class JITCompilerGUI:
         except Exception as e:
             self.show_popup("Assembly Error", str(e))
 
-    def show_popup(self, title, content):
-        win = tk.Toplevel(self.root)
-        win.title(title)
-        txt = tk.Text(win, wrap=tk.NONE, font=("Consolas", 12))
-        txt.insert(tk.END, content)
-        txt.pack(fill=tk.BOTH, expand=True)
-        txt.config(state=tk.DISABLED)
-        win.geometry("600x400")
-
-    def status(self, msg):
-        self.statusbar.config(text=msg)   
+ 
             
