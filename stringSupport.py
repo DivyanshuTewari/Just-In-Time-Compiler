@@ -178,3 +178,99 @@ def compile_ast(node, context, reg='rax'):
                 else:
                     machine_code += opcodes['mov rax, imm64'] + struct.pack('<Q', imm)
             else:
+                raise ValueError(f"Unknown or unsupported mov rax, {arg}")
+        elif line.startswith("mov rcx,") and '[' not in line:
+            arg = line.split(',')[1].strip()
+            if arg.isdigit() or (arg[0] == '-' and arg[1:].isdigit()):
+                imm = int(arg)
+                machine_code += opcodes['mov rcx, imm'] + struct.pack('<i', imm)
+            elif arg == 'rax':
+                machine_code += opcodes['mov rcx, rax']
+            else:
+                raise ValueError(f"Unknown or unsupported mov rcx, {arg}")
+        elif line.startswith("mov rax, [rbp -"):
+            offset = int(line.split('-')[1].split(']')[0].strip())
+            machine_code += opcodes['mov rax, mem'] + struct.pack('<i', -offset)
+        elif line.startswith("mov rcx, [rbp -"):
+            offset = int(line.split('-')[1].split(']')[0].strip())
+            machine_code += opcodes['mov rcx, mem'] + struct.pack('<i', -offset)
+        elif line.startswith("mov [rbp -"):
+            offset = int(line.split('-')[1].split(']')[0].strip())
+            machine_code += opcodes['mov mem, rax'] + struct.pack('<i', -offset)
+        elif line.startswith("sub rsp,"):
+            imm = int(line.split(',')[1].strip())
+            machine_code += opcodes['sub rsp, imm'] + struct.pack('<i', imm)
+        elif line.startswith("lea rax, [rbp -"):
+            offset = int(line.split('-')[1].split(']')[0].strip())
+            machine_code += opcodes['lea rax, mem'] + struct.pack('<i', -offset)
+        elif line.startswith("lea rcx, [rbp -"):
+            offset = int(line.split('-')[1].split(']')[0].strip())
+            machine_code += opcodes['lea rcx, mem'] + struct.pack('<i', -offset)
+        elif line.startswith("mov byte ptr [rbp -"):
+            m = re.match(r"mov byte ptr \[rbp - (\d+)\s*\+\s*(\d+)\],\s*(\d+)", line)
+            if m:
+                base = int(m.group(1))
+                plus = int(m.group(2))
+                offset = base + plus
+                imm = int(m.group(3))
+            else:
+                m = re.match(r"mov byte ptr \[rbp - (\d+)\],\s*(\d+)", line)
+                if not m:
+                    raise ValueError(f"Unknown instruction: {line}")
+                offset = int(m.group(1))
+                imm = int(m.group(2))
+            machine_code += opcodes['mov byte ptr'] + struct.pack('<i', -offset) + bytes([imm])
+        else:
+            raise ValueError(f"Unknown instruction: {line}")
+    return bytes(machine_code)
+
+def jit_compile(expression, variables=None, debug=False):
+    global _static_string_next
+    lexer.input(expression)
+    ast_list = parser.parse(expression)
+    if ast_list is None:
+        raise ValueError("Parsing failed, no AST generated")
+
+    _static_string_next = 0
+    string_buffer_offsets = {}
+    var_offsets = {}
+    variables = {} if variables is None else variables.copy()
+    string_vars = set()
+    offset = 16
+
+    def collect_strings(node):
+        if isinstance(node, String):
+            if node.value not in string_buffer_offsets:
+                string_buffer_offsets[node.value] = allocate_static_string(node.value)
+        elif isinstance(node, BinOp):
+            collect_strings(node.left)
+            collect_strings(node.right)
+        elif isinstance(node, tuple) and node[0] == 'assign':
+            collect_strings(node[2])
+
+    for stmt in ast_list:
+        collect_strings(stmt)
+
+    def collect_vars(node):
+        nonlocal offset
+        if isinstance(node, tuple) and node[0] == 'assign':
+            var = node[1]
+            val = node[2]
+            if not is_string_node(val, {'string_vars': set()}):
+                if var not in var_offsets:
+                    var_offsets[var] = offset
+                    offset += 8
+        elif isinstance(node, BinOp):
+            collect_vars(node.left)
+            collect_vars(node.right)
+
+    for stmt in ast_list:
+        collect_vars(stmt)
+
+
+    if offset % 16 != 0:
+        offset += (16 - (offset % 16))
+
+    context = {
+        'variables': variables,
+
