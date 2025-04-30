@@ -173,7 +173,7 @@ def compile_ast(node, context, reg='rax'):
             arg = line.split(',')[1].strip()
             if arg.isdigit() or (arg[0] == '-' and arg[1:].isdigit()):
                 imm = int(arg)
-                if -2147483648 <= imm <= 2147483647:
+                i3647:
                     machine_code += opcodes['mov rax, imm'] + struct.pack('<i', imm)
                 else:
                     machine_code += opcodes['mov rax, imm64'] + struct.pack('<Q', imm)
