@@ -432,3 +432,15 @@ def jit_compile(expression, variables=None, debug=False):
     func_type = ctypes.CFUNCTYPE(ctypes.c_uint64)
     return func_type(ctypes.addressof(buf))
 
+# --------------------------
+# Test Cases
+# --------------------------
+if __name__ == "__main__":
+    from ctypes import string_at
+
+    expr = '"Hello, " + "World!"'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
+
+
