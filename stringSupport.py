@@ -458,4 +458,30 @@ if __name__ == "__main__":
     addr = func()
     print(f'{expr} = {string_at(addr).decode()}')
 
- 
+    # Numeric and string tests from your original code...
+    expr = "8*3*6*4*7-1-2-4+4+6*24*213*54"
+    func = jit_compile(expr)
+    result = func()
+    print(f"{expr} = {result}")
+
+    expr = "(2+3)*5"
+    func = jit_compile(expr)
+    print(f"{expr} = {func()}")
+
+    expr = "(10-2)/4"
+    func = jit_compile(expr)
+    print(f"{expr} = {func()}")
+
+    expr = "a=5; b=3; a*b + 2"
+    func = jit_compile(expr)
+    print(f"{expr} = {func()}")
+
+    expr = 's="Hello, World!"; s'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
+
+    expr = '"Test string literal"'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
