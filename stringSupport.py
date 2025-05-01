@@ -443,4 +443,19 @@ if __name__ == "__main__":
     addr = func()
     print(f'{expr} = {string_at(addr).decode()}')
 
+    expr = 'a="foo"; b="bar"; a+b'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
 
+    expr = '"abc" + "def" + "ghi"'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
+
+    expr = 's="Python "; s+"rocks!"'
+    func = jit_compile(expr)
+    addr = func()
+    print(f'{expr} = {string_at(addr).decode()}')
+
+ 
