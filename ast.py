@@ -10,6 +10,23 @@ block = function.append_basic_block(name="entry")
 builder = ir.IRBuilder(block)
 
 
+# AST for: (4.0 + 2.0) * 3.0
+ast = BinaryOp(
+    BinaryOp(Number(4.0), '+', Number(2.0)),
+    '*',
+    Number(3.0)
+)
+
+cg = CodeGen()
+cg.compile(ast)
+
+print("Generated LLVM IR:")
+print(cg.module)
+
+result = run_jit(cg.module)
+print("JIT Result:", result)
+
+
 def compile_expr(expr):
     if isinstance(expr, Number):
         return ir.Constant(ir.DoubleType(), expr.value)
