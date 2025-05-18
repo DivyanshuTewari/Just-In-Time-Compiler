@@ -9,56 +9,59 @@ Rule 3     statement -> assignment
 Rule 4     statement -> expression SEMICOLON
 Rule 5     statement -> expression
 Rule 6     assignment -> IDENTIFIER EQUALS expression SEMICOLON
-Rule 7     expression -> expression PLUS expression
-Rule 8     expression -> expression MINUS expression
-Rule 9     expression -> expression MUL expression
-Rule 10    expression -> expression DIV expression
-Rule 11    expression -> expression AND expression
-Rule 12    expression -> expression OR expression
-Rule 13    expression -> expression EQ expression
-Rule 14    expression -> expression NE expression
-Rule 15    expression -> expression LT expression
-Rule 16    expression -> expression GT expression
-Rule 17    expression -> expression LE expression
-Rule 18    expression -> expression GE expression
-Rule 19    expression -> NOT expression
-Rule 20    expression -> factor
-Rule 21    factor -> BOOL
-Rule 22    factor -> NUMBER
-Rule 23    factor -> IDENTIFIER
-Rule 24    factor -> STRING
-Rule 25    factor -> LPAREN expression RPAREN
+Rule 7     expression -> IF LPAREN expression RPAREN expression ELSE expression
+Rule 8     expression -> expression PLUS expression
+Rule 9     expression -> expression MINUS expression
+Rule 10    expression -> expression MUL expression
+Rule 11    expression -> expression DIV expression
+Rule 12    expression -> expression AND expression
+Rule 13    expression -> expression OR expression
+Rule 14    expression -> expression EQ expression
+Rule 15    expression -> expression NE expression
+Rule 16    expression -> expression LT expression
+Rule 17    expression -> expression GT expression
+Rule 18    expression -> expression LE expression
+Rule 19    expression -> expression GE expression
+Rule 20    expression -> NOT expression
+Rule 21    expression -> factor
+Rule 22    factor -> BOOL
+Rule 23    factor -> NUMBER
+Rule 24    factor -> IDENTIFIER
+Rule 25    factor -> STRING
+Rule 26    factor -> LPAREN expression RPAREN
 
 Terminals, with rules where they appear
 
-AND                  : 11
-BOOL                 : 21
-DIV                  : 10
-EQ                   : 13
+AND                  : 12
+BOOL                 : 22
+DIV                  : 11
+ELSE                 : 7
+EQ                   : 14
 EQUALS               : 6
-GE                   : 18
-GT                   : 16
-IDENTIFIER           : 6 23
-LE                   : 17
-LPAREN               : 25
-LT                   : 15
-MINUS                : 8
-MUL                  : 9
-NE                   : 14
-NOT                  : 19
-NUMBER               : 22
-OR                   : 12
-PLUS                 : 7
-RPAREN               : 25
+GE                   : 19
+GT                   : 17
+IDENTIFIER           : 6 24
+IF                   : 7
+LE                   : 18
+LPAREN               : 7 26
+LT                   : 16
+MINUS                : 9
+MUL                  : 10
+NE                   : 15
+NOT                  : 20
+NUMBER               : 23
+OR                   : 13
+PLUS                 : 8
+RPAREN               : 7 26
 SEMICOLON            : 4 6
-STRING               : 24
+STRING               : 25
 error                : 
 
 Nonterminals, with rules where they appear
 
 assignment           : 3
-expression           : 4 5 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 17 18 18 19 25
-factor               : 20
+expression           : 4 5 6 7 7 7 8 8 9 9 10 10 11 11 12 12 13 13 14 14 15 15 16 16 17 17 18 18 19 19 20 26
+factor               : 21
 program              : 2 0
 statement            : 1 2
 
@@ -73,38 +76,40 @@ state 0
     (4) statement -> . expression SEMICOLON
     (5) statement -> . expression
     (6) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
     IDENTIFIER      shift and go to state 5
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
     program                        shift and go to state 1
     statement                      shift and go to state 2
     assignment                     shift and go to state 3
     expression                     shift and go to state 4
-    factor                         shift and go to state 7
+    factor                         shift and go to state 9
 
 state 1
 
@@ -122,45 +127,48 @@ state 2
     (4) statement -> . expression SEMICOLON
     (5) statement -> . expression
     (6) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
     $end            reduce using rule 1 (program -> statement .)
     IDENTIFIER      shift and go to state 5
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
     statement                      shift and go to state 2
-    program                        shift and go to state 12
+    program                        shift and go to state 13
     assignment                     shift and go to state 3
     expression                     shift and go to state 4
-    factor                         shift and go to state 7
+    factor                         shift and go to state 9
 
 state 3
 
     (3) statement -> assignment .
 
     IDENTIFIER      reduce using rule 3 (statement -> assignment .)
+    IF              reduce using rule 3 (statement -> assignment .)
     NOT             reduce using rule 3 (statement -> assignment .)
     BOOL            reduce using rule 3 (statement -> assignment .)
     NUMBER          reduce using rule 3 (statement -> assignment .)
@@ -173,255 +181,277 @@ state 4
 
     (4) statement -> expression . SEMICOLON
     (5) statement -> expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       shift and go to state 13
+    SEMICOLON       shift and go to state 14
     IDENTIFIER      reduce using rule 5 (statement -> expression .)
+    IF              reduce using rule 5 (statement -> expression .)
     NOT             reduce using rule 5 (statement -> expression .)
     BOOL            reduce using rule 5 (statement -> expression .)
     NUMBER          reduce using rule 5 (statement -> expression .)
     STRING          reduce using rule 5 (statement -> expression .)
     LPAREN          reduce using rule 5 (statement -> expression .)
     $end            reduce using rule 5 (statement -> expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    AND             shift and go to state 18
-    OR              shift and go to state 19
-    EQ              shift and go to state 20
-    NE              shift and go to state 21
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
 
 state 5
 
     (6) assignment -> IDENTIFIER . EQUALS expression SEMICOLON
-    (23) factor -> IDENTIFIER .
+    (24) factor -> IDENTIFIER .
 
-    EQUALS          shift and go to state 26
-    SEMICOLON       reduce using rule 23 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 23 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 23 (factor -> IDENTIFIER .)
-    MUL             reduce using rule 23 (factor -> IDENTIFIER .)
-    DIV             reduce using rule 23 (factor -> IDENTIFIER .)
-    AND             reduce using rule 23 (factor -> IDENTIFIER .)
-    OR              reduce using rule 23 (factor -> IDENTIFIER .)
-    EQ              reduce using rule 23 (factor -> IDENTIFIER .)
-    NE              reduce using rule 23 (factor -> IDENTIFIER .)
-    LT              reduce using rule 23 (factor -> IDENTIFIER .)
-    GT              reduce using rule 23 (factor -> IDENTIFIER .)
-    LE              reduce using rule 23 (factor -> IDENTIFIER .)
-    GE              reduce using rule 23 (factor -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 23 (factor -> IDENTIFIER .)
-    NOT             reduce using rule 23 (factor -> IDENTIFIER .)
-    BOOL            reduce using rule 23 (factor -> IDENTIFIER .)
-    NUMBER          reduce using rule 23 (factor -> IDENTIFIER .)
-    STRING          reduce using rule 23 (factor -> IDENTIFIER .)
-    LPAREN          reduce using rule 23 (factor -> IDENTIFIER .)
-    $end            reduce using rule 23 (factor -> IDENTIFIER .)
+    EQUALS          shift and go to state 27
+    SEMICOLON       reduce using rule 24 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 24 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 24 (factor -> IDENTIFIER .)
+    MUL             reduce using rule 24 (factor -> IDENTIFIER .)
+    DIV             reduce using rule 24 (factor -> IDENTIFIER .)
+    AND             reduce using rule 24 (factor -> IDENTIFIER .)
+    OR              reduce using rule 24 (factor -> IDENTIFIER .)
+    EQ              reduce using rule 24 (factor -> IDENTIFIER .)
+    NE              reduce using rule 24 (factor -> IDENTIFIER .)
+    LT              reduce using rule 24 (factor -> IDENTIFIER .)
+    GT              reduce using rule 24 (factor -> IDENTIFIER .)
+    LE              reduce using rule 24 (factor -> IDENTIFIER .)
+    GE              reduce using rule 24 (factor -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 24 (factor -> IDENTIFIER .)
+    IF              reduce using rule 24 (factor -> IDENTIFIER .)
+    NOT             reduce using rule 24 (factor -> IDENTIFIER .)
+    BOOL            reduce using rule 24 (factor -> IDENTIFIER .)
+    NUMBER          reduce using rule 24 (factor -> IDENTIFIER .)
+    STRING          reduce using rule 24 (factor -> IDENTIFIER .)
+    LPAREN          reduce using rule 24 (factor -> IDENTIFIER .)
+    $end            reduce using rule 24 (factor -> IDENTIFIER .)
 
 
 state 6
 
-    (19) expression -> NOT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (7) expression -> IF . LPAREN expression RPAREN expression ELSE expression
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    LPAREN          shift and go to state 28
 
-    expression                     shift and go to state 27
-    factor                         shift and go to state 7
 
 state 7
 
-    (20) expression -> factor .
+    (26) factor -> LPAREN . expression RPAREN
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    SEMICOLON       reduce using rule 20 (expression -> factor .)
-    PLUS            reduce using rule 20 (expression -> factor .)
-    MINUS           reduce using rule 20 (expression -> factor .)
-    MUL             reduce using rule 20 (expression -> factor .)
-    DIV             reduce using rule 20 (expression -> factor .)
-    AND             reduce using rule 20 (expression -> factor .)
-    OR              reduce using rule 20 (expression -> factor .)
-    EQ              reduce using rule 20 (expression -> factor .)
-    NE              reduce using rule 20 (expression -> factor .)
-    LT              reduce using rule 20 (expression -> factor .)
-    GT              reduce using rule 20 (expression -> factor .)
-    LE              reduce using rule 20 (expression -> factor .)
-    GE              reduce using rule 20 (expression -> factor .)
-    IDENTIFIER      reduce using rule 20 (expression -> factor .)
-    NOT             reduce using rule 20 (expression -> factor .)
-    BOOL            reduce using rule 20 (expression -> factor .)
-    NUMBER          reduce using rule 20 (expression -> factor .)
-    STRING          reduce using rule 20 (expression -> factor .)
-    LPAREN          reduce using rule 20 (expression -> factor .)
-    $end            reduce using rule 20 (expression -> factor .)
-    RPAREN          reduce using rule 20 (expression -> factor .)
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
+    expression                     shift and go to state 29
+    factor                         shift and go to state 9
 
 state 8
 
-    (21) factor -> BOOL .
+    (20) expression -> NOT . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    SEMICOLON       reduce using rule 21 (factor -> BOOL .)
-    PLUS            reduce using rule 21 (factor -> BOOL .)
-    MINUS           reduce using rule 21 (factor -> BOOL .)
-    MUL             reduce using rule 21 (factor -> BOOL .)
-    DIV             reduce using rule 21 (factor -> BOOL .)
-    AND             reduce using rule 21 (factor -> BOOL .)
-    OR              reduce using rule 21 (factor -> BOOL .)
-    EQ              reduce using rule 21 (factor -> BOOL .)
-    NE              reduce using rule 21 (factor -> BOOL .)
-    LT              reduce using rule 21 (factor -> BOOL .)
-    GT              reduce using rule 21 (factor -> BOOL .)
-    LE              reduce using rule 21 (factor -> BOOL .)
-    GE              reduce using rule 21 (factor -> BOOL .)
-    IDENTIFIER      reduce using rule 21 (factor -> BOOL .)
-    NOT             reduce using rule 21 (factor -> BOOL .)
-    BOOL            reduce using rule 21 (factor -> BOOL .)
-    NUMBER          reduce using rule 21 (factor -> BOOL .)
-    STRING          reduce using rule 21 (factor -> BOOL .)
-    LPAREN          reduce using rule 21 (factor -> BOOL .)
-    $end            reduce using rule 21 (factor -> BOOL .)
-    RPAREN          reduce using rule 21 (factor -> BOOL .)
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
+    expression                     shift and go to state 31
+    factor                         shift and go to state 9
 
 state 9
 
-    (22) factor -> NUMBER .
+    (21) expression -> factor .
 
-    SEMICOLON       reduce using rule 22 (factor -> NUMBER .)
-    PLUS            reduce using rule 22 (factor -> NUMBER .)
-    MINUS           reduce using rule 22 (factor -> NUMBER .)
-    MUL             reduce using rule 22 (factor -> NUMBER .)
-    DIV             reduce using rule 22 (factor -> NUMBER .)
-    AND             reduce using rule 22 (factor -> NUMBER .)
-    OR              reduce using rule 22 (factor -> NUMBER .)
-    EQ              reduce using rule 22 (factor -> NUMBER .)
-    NE              reduce using rule 22 (factor -> NUMBER .)
-    LT              reduce using rule 22 (factor -> NUMBER .)
-    GT              reduce using rule 22 (factor -> NUMBER .)
-    LE              reduce using rule 22 (factor -> NUMBER .)
-    GE              reduce using rule 22 (factor -> NUMBER .)
-    IDENTIFIER      reduce using rule 22 (factor -> NUMBER .)
-    NOT             reduce using rule 22 (factor -> NUMBER .)
-    BOOL            reduce using rule 22 (factor -> NUMBER .)
-    NUMBER          reduce using rule 22 (factor -> NUMBER .)
-    STRING          reduce using rule 22 (factor -> NUMBER .)
-    LPAREN          reduce using rule 22 (factor -> NUMBER .)
-    $end            reduce using rule 22 (factor -> NUMBER .)
-    RPAREN          reduce using rule 22 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 21 (expression -> factor .)
+    PLUS            reduce using rule 21 (expression -> factor .)
+    MINUS           reduce using rule 21 (expression -> factor .)
+    MUL             reduce using rule 21 (expression -> factor .)
+    DIV             reduce using rule 21 (expression -> factor .)
+    AND             reduce using rule 21 (expression -> factor .)
+    OR              reduce using rule 21 (expression -> factor .)
+    EQ              reduce using rule 21 (expression -> factor .)
+    NE              reduce using rule 21 (expression -> factor .)
+    LT              reduce using rule 21 (expression -> factor .)
+    GT              reduce using rule 21 (expression -> factor .)
+    LE              reduce using rule 21 (expression -> factor .)
+    GE              reduce using rule 21 (expression -> factor .)
+    IDENTIFIER      reduce using rule 21 (expression -> factor .)
+    IF              reduce using rule 21 (expression -> factor .)
+    NOT             reduce using rule 21 (expression -> factor .)
+    BOOL            reduce using rule 21 (expression -> factor .)
+    NUMBER          reduce using rule 21 (expression -> factor .)
+    STRING          reduce using rule 21 (expression -> factor .)
+    LPAREN          reduce using rule 21 (expression -> factor .)
+    $end            reduce using rule 21 (expression -> factor .)
+    RPAREN          reduce using rule 21 (expression -> factor .)
+    ELSE            reduce using rule 21 (expression -> factor .)
 
 
 state 10
 
-    (24) factor -> STRING .
+    (22) factor -> BOOL .
 
-    SEMICOLON       reduce using rule 24 (factor -> STRING .)
-    PLUS            reduce using rule 24 (factor -> STRING .)
-    MINUS           reduce using rule 24 (factor -> STRING .)
-    MUL             reduce using rule 24 (factor -> STRING .)
-    DIV             reduce using rule 24 (factor -> STRING .)
-    AND             reduce using rule 24 (factor -> STRING .)
-    OR              reduce using rule 24 (factor -> STRING .)
-    EQ              reduce using rule 24 (factor -> STRING .)
-    NE              reduce using rule 24 (factor -> STRING .)
-    LT              reduce using rule 24 (factor -> STRING .)
-    GT              reduce using rule 24 (factor -> STRING .)
-    LE              reduce using rule 24 (factor -> STRING .)
-    GE              reduce using rule 24 (factor -> STRING .)
-    IDENTIFIER      reduce using rule 24 (factor -> STRING .)
-    NOT             reduce using rule 24 (factor -> STRING .)
-    BOOL            reduce using rule 24 (factor -> STRING .)
-    NUMBER          reduce using rule 24 (factor -> STRING .)
-    STRING          reduce using rule 24 (factor -> STRING .)
-    LPAREN          reduce using rule 24 (factor -> STRING .)
-    $end            reduce using rule 24 (factor -> STRING .)
-    RPAREN          reduce using rule 24 (factor -> STRING .)
+    SEMICOLON       reduce using rule 22 (factor -> BOOL .)
+    PLUS            reduce using rule 22 (factor -> BOOL .)
+    MINUS           reduce using rule 22 (factor -> BOOL .)
+    MUL             reduce using rule 22 (factor -> BOOL .)
+    DIV             reduce using rule 22 (factor -> BOOL .)
+    AND             reduce using rule 22 (factor -> BOOL .)
+    OR              reduce using rule 22 (factor -> BOOL .)
+    EQ              reduce using rule 22 (factor -> BOOL .)
+    NE              reduce using rule 22 (factor -> BOOL .)
+    LT              reduce using rule 22 (factor -> BOOL .)
+    GT              reduce using rule 22 (factor -> BOOL .)
+    LE              reduce using rule 22 (factor -> BOOL .)
+    GE              reduce using rule 22 (factor -> BOOL .)
+    IDENTIFIER      reduce using rule 22 (factor -> BOOL .)
+    IF              reduce using rule 22 (factor -> BOOL .)
+    NOT             reduce using rule 22 (factor -> BOOL .)
+    BOOL            reduce using rule 22 (factor -> BOOL .)
+    NUMBER          reduce using rule 22 (factor -> BOOL .)
+    STRING          reduce using rule 22 (factor -> BOOL .)
+    LPAREN          reduce using rule 22 (factor -> BOOL .)
+    $end            reduce using rule 22 (factor -> BOOL .)
+    RPAREN          reduce using rule 22 (factor -> BOOL .)
+    ELSE            reduce using rule 22 (factor -> BOOL .)
 
 
 state 11
 
-    (25) factor -> LPAREN . expression RPAREN
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (23) factor -> NUMBER .
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    SEMICOLON       reduce using rule 23 (factor -> NUMBER .)
+    PLUS            reduce using rule 23 (factor -> NUMBER .)
+    MINUS           reduce using rule 23 (factor -> NUMBER .)
+    MUL             reduce using rule 23 (factor -> NUMBER .)
+    DIV             reduce using rule 23 (factor -> NUMBER .)
+    AND             reduce using rule 23 (factor -> NUMBER .)
+    OR              reduce using rule 23 (factor -> NUMBER .)
+    EQ              reduce using rule 23 (factor -> NUMBER .)
+    NE              reduce using rule 23 (factor -> NUMBER .)
+    LT              reduce using rule 23 (factor -> NUMBER .)
+    GT              reduce using rule 23 (factor -> NUMBER .)
+    LE              reduce using rule 23 (factor -> NUMBER .)
+    GE              reduce using rule 23 (factor -> NUMBER .)
+    IDENTIFIER      reduce using rule 23 (factor -> NUMBER .)
+    IF              reduce using rule 23 (factor -> NUMBER .)
+    NOT             reduce using rule 23 (factor -> NUMBER .)
+    BOOL            reduce using rule 23 (factor -> NUMBER .)
+    NUMBER          reduce using rule 23 (factor -> NUMBER .)
+    STRING          reduce using rule 23 (factor -> NUMBER .)
+    LPAREN          reduce using rule 23 (factor -> NUMBER .)
+    $end            reduce using rule 23 (factor -> NUMBER .)
+    RPAREN          reduce using rule 23 (factor -> NUMBER .)
+    ELSE            reduce using rule 23 (factor -> NUMBER .)
 
-    expression                     shift and go to state 29
-    factor                         shift and go to state 7
 
 state 12
+
+    (25) factor -> STRING .
+
+    SEMICOLON       reduce using rule 25 (factor -> STRING .)
+    PLUS            reduce using rule 25 (factor -> STRING .)
+    MINUS           reduce using rule 25 (factor -> STRING .)
+    MUL             reduce using rule 25 (factor -> STRING .)
+    DIV             reduce using rule 25 (factor -> STRING .)
+    AND             reduce using rule 25 (factor -> STRING .)
+    OR              reduce using rule 25 (factor -> STRING .)
+    EQ              reduce using rule 25 (factor -> STRING .)
+    NE              reduce using rule 25 (factor -> STRING .)
+    LT              reduce using rule 25 (factor -> STRING .)
+    GT              reduce using rule 25 (factor -> STRING .)
+    LE              reduce using rule 25 (factor -> STRING .)
+    GE              reduce using rule 25 (factor -> STRING .)
+    IDENTIFIER      reduce using rule 25 (factor -> STRING .)
+    IF              reduce using rule 25 (factor -> STRING .)
+    NOT             reduce using rule 25 (factor -> STRING .)
+    BOOL            reduce using rule 25 (factor -> STRING .)
+    NUMBER          reduce using rule 25 (factor -> STRING .)
+    STRING          reduce using rule 25 (factor -> STRING .)
+    LPAREN          reduce using rule 25 (factor -> STRING .)
+    $end            reduce using rule 25 (factor -> STRING .)
+    RPAREN          reduce using rule 25 (factor -> STRING .)
+    ELSE            reduce using rule 25 (factor -> STRING .)
+
+
+state 13
 
     (2) program -> statement program .
 
     $end            reduce using rule 2 (program -> statement program .)
 
 
-state 13
+state 14
 
     (4) statement -> expression SEMICOLON .
 
     IDENTIFIER      reduce using rule 4 (statement -> expression SEMICOLON .)
+    IF              reduce using rule 4 (statement -> expression SEMICOLON .)
     NOT             reduce using rule 4 (statement -> expression SEMICOLON .)
     BOOL            reduce using rule 4 (statement -> expression SEMICOLON .)
     NUMBER          reduce using rule 4 (statement -> expression SEMICOLON .)
@@ -430,1232 +460,1355 @@ state 13
     $end            reduce using rule 4 (statement -> expression SEMICOLON .)
 
 
-state 14
-
-    (7) expression -> expression PLUS . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
-
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
-
-    expression                     shift and go to state 30
-    factor                         shift and go to state 7
-
 state 15
 
-    (8) expression -> expression MINUS . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (8) expression -> expression PLUS . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 31
-    factor                         shift and go to state 7
+    expression                     shift and go to state 32
+    factor                         shift and go to state 9
 
 state 16
 
-    (9) expression -> expression MUL . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (9) expression -> expression MINUS . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 32
-    factor                         shift and go to state 7
+    expression                     shift and go to state 33
+    factor                         shift and go to state 9
 
 state 17
 
-    (10) expression -> expression DIV . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (10) expression -> expression MUL . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 33
-    factor                         shift and go to state 7
+    expression                     shift and go to state 34
+    factor                         shift and go to state 9
 
 state 18
 
-    (11) expression -> expression AND . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (11) expression -> expression DIV . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 34
-    factor                         shift and go to state 7
+    expression                     shift and go to state 35
+    factor                         shift and go to state 9
 
 state 19
 
-    (12) expression -> expression OR . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (12) expression -> expression AND . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 35
-    factor                         shift and go to state 7
+    expression                     shift and go to state 36
+    factor                         shift and go to state 9
 
 state 20
 
-    (13) expression -> expression EQ . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (13) expression -> expression OR . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 36
-    factor                         shift and go to state 7
+    expression                     shift and go to state 37
+    factor                         shift and go to state 9
 
 state 21
 
-    (14) expression -> expression NE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (14) expression -> expression EQ . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 37
-    factor                         shift and go to state 7
+    expression                     shift and go to state 38
+    factor                         shift and go to state 9
 
 state 22
 
-    (15) expression -> expression LT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (15) expression -> expression NE . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 38
-    factor                         shift and go to state 7
+    expression                     shift and go to state 39
+    factor                         shift and go to state 9
 
 state 23
 
-    (16) expression -> expression GT . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (16) expression -> expression LT . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 39
-    factor                         shift and go to state 7
+    expression                     shift and go to state 40
+    factor                         shift and go to state 9
 
 state 24
 
-    (17) expression -> expression LE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (17) expression -> expression GT . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 40
-    factor                         shift and go to state 7
+    expression                     shift and go to state 41
+    factor                         shift and go to state 9
 
 state 25
 
-    (18) expression -> expression GE . expression
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (18) expression -> expression LE . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 41
-    factor                         shift and go to state 7
+    expression                     shift and go to state 42
+    factor                         shift and go to state 9
 
 state 26
 
-    (6) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
-    (7) expression -> . expression PLUS expression
-    (8) expression -> . expression MINUS expression
-    (9) expression -> . expression MUL expression
-    (10) expression -> . expression DIV expression
-    (11) expression -> . expression AND expression
-    (12) expression -> . expression OR expression
-    (13) expression -> . expression EQ expression
-    (14) expression -> . expression NE expression
-    (15) expression -> . expression LT expression
-    (16) expression -> . expression GT expression
-    (17) expression -> . expression LE expression
-    (18) expression -> . expression GE expression
-    (19) expression -> . NOT expression
-    (20) expression -> . factor
-    (21) factor -> . BOOL
-    (22) factor -> . NUMBER
-    (23) factor -> . IDENTIFIER
-    (24) factor -> . STRING
-    (25) factor -> . LPAREN expression RPAREN
+    (19) expression -> expression GE . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    NOT             shift and go to state 6
-    BOOL            shift and go to state 8
-    NUMBER          shift and go to state 9
-    IDENTIFIER      shift and go to state 28
-    STRING          shift and go to state 10
-    LPAREN          shift and go to state 11
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-    expression                     shift and go to state 42
-    factor                         shift and go to state 7
+    expression                     shift and go to state 43
+    factor                         shift and go to state 9
 
 state 27
 
-    (19) expression -> NOT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (6) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    SEMICOLON       reduce using rule 19 (expression -> NOT expression .)
-    PLUS            reduce using rule 19 (expression -> NOT expression .)
-    MINUS           reduce using rule 19 (expression -> NOT expression .)
-    MUL             reduce using rule 19 (expression -> NOT expression .)
-    DIV             reduce using rule 19 (expression -> NOT expression .)
-    AND             reduce using rule 19 (expression -> NOT expression .)
-    OR              reduce using rule 19 (expression -> NOT expression .)
-    EQ              reduce using rule 19 (expression -> NOT expression .)
-    NE              reduce using rule 19 (expression -> NOT expression .)
-    LT              reduce using rule 19 (expression -> NOT expression .)
-    GT              reduce using rule 19 (expression -> NOT expression .)
-    LE              reduce using rule 19 (expression -> NOT expression .)
-    GE              reduce using rule 19 (expression -> NOT expression .)
-    IDENTIFIER      reduce using rule 19 (expression -> NOT expression .)
-    NOT             reduce using rule 19 (expression -> NOT expression .)
-    BOOL            reduce using rule 19 (expression -> NOT expression .)
-    NUMBER          reduce using rule 19 (expression -> NOT expression .)
-    STRING          reduce using rule 19 (expression -> NOT expression .)
-    LPAREN          reduce using rule 19 (expression -> NOT expression .)
-    $end            reduce using rule 19 (expression -> NOT expression .)
-    RPAREN          reduce using rule 19 (expression -> NOT expression .)
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
-  ! PLUS            [ shift and go to state 14 ]
-  ! MINUS           [ shift and go to state 15 ]
-  ! MUL             [ shift and go to state 16 ]
-  ! DIV             [ shift and go to state 17 ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
-
+    expression                     shift and go to state 44
+    factor                         shift and go to state 9
 
 state 28
 
-    (23) factor -> IDENTIFIER .
+    (7) expression -> IF LPAREN . expression RPAREN expression ELSE expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
 
-    PLUS            reduce using rule 23 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 23 (factor -> IDENTIFIER .)
-    MUL             reduce using rule 23 (factor -> IDENTIFIER .)
-    DIV             reduce using rule 23 (factor -> IDENTIFIER .)
-    AND             reduce using rule 23 (factor -> IDENTIFIER .)
-    OR              reduce using rule 23 (factor -> IDENTIFIER .)
-    EQ              reduce using rule 23 (factor -> IDENTIFIER .)
-    NE              reduce using rule 23 (factor -> IDENTIFIER .)
-    LT              reduce using rule 23 (factor -> IDENTIFIER .)
-    GT              reduce using rule 23 (factor -> IDENTIFIER .)
-    LE              reduce using rule 23 (factor -> IDENTIFIER .)
-    GE              reduce using rule 23 (factor -> IDENTIFIER .)
-    SEMICOLON       reduce using rule 23 (factor -> IDENTIFIER .)
-    IDENTIFIER      reduce using rule 23 (factor -> IDENTIFIER .)
-    NOT             reduce using rule 23 (factor -> IDENTIFIER .)
-    BOOL            reduce using rule 23 (factor -> IDENTIFIER .)
-    NUMBER          reduce using rule 23 (factor -> IDENTIFIER .)
-    STRING          reduce using rule 23 (factor -> IDENTIFIER .)
-    LPAREN          reduce using rule 23 (factor -> IDENTIFIER .)
-    $end            reduce using rule 23 (factor -> IDENTIFIER .)
-    RPAREN          reduce using rule 23 (factor -> IDENTIFIER .)
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
 
+    expression                     shift and go to state 45
+    factor                         shift and go to state 9
 
 state 29
 
-    (25) factor -> LPAREN expression . RPAREN
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (26) factor -> LPAREN expression . RPAREN
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    RPAREN          shift and go to state 43
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    AND             shift and go to state 18
-    OR              shift and go to state 19
-    EQ              shift and go to state 20
-    NE              shift and go to state 21
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    RPAREN          shift and go to state 46
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
 
 state 30
 
-    (7) expression -> expression PLUS expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (24) factor -> IDENTIFIER .
 
-    SEMICOLON       reduce using rule 7 (expression -> expression PLUS expression .)
-    PLUS            reduce using rule 7 (expression -> expression PLUS expression .)
-    MINUS           reduce using rule 7 (expression -> expression PLUS expression .)
-    AND             reduce using rule 7 (expression -> expression PLUS expression .)
-    OR              reduce using rule 7 (expression -> expression PLUS expression .)
-    EQ              reduce using rule 7 (expression -> expression PLUS expression .)
-    NE              reduce using rule 7 (expression -> expression PLUS expression .)
-    LT              reduce using rule 7 (expression -> expression PLUS expression .)
-    GT              reduce using rule 7 (expression -> expression PLUS expression .)
-    LE              reduce using rule 7 (expression -> expression PLUS expression .)
-    GE              reduce using rule 7 (expression -> expression PLUS expression .)
-    IDENTIFIER      reduce using rule 7 (expression -> expression PLUS expression .)
-    NOT             reduce using rule 7 (expression -> expression PLUS expression .)
-    BOOL            reduce using rule 7 (expression -> expression PLUS expression .)
-    NUMBER          reduce using rule 7 (expression -> expression PLUS expression .)
-    STRING          reduce using rule 7 (expression -> expression PLUS expression .)
-    LPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
-    $end            reduce using rule 7 (expression -> expression PLUS expression .)
-    RPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-
-  ! MUL             [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! DIV             [ reduce using rule 7 (expression -> expression PLUS expression .) ]
-  ! PLUS            [ shift and go to state 14 ]
-  ! MINUS           [ shift and go to state 15 ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+    RPAREN          reduce using rule 24 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 24 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 24 (factor -> IDENTIFIER .)
+    MUL             reduce using rule 24 (factor -> IDENTIFIER .)
+    DIV             reduce using rule 24 (factor -> IDENTIFIER .)
+    AND             reduce using rule 24 (factor -> IDENTIFIER .)
+    OR              reduce using rule 24 (factor -> IDENTIFIER .)
+    EQ              reduce using rule 24 (factor -> IDENTIFIER .)
+    NE              reduce using rule 24 (factor -> IDENTIFIER .)
+    LT              reduce using rule 24 (factor -> IDENTIFIER .)
+    GT              reduce using rule 24 (factor -> IDENTIFIER .)
+    LE              reduce using rule 24 (factor -> IDENTIFIER .)
+    GE              reduce using rule 24 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 24 (factor -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 24 (factor -> IDENTIFIER .)
+    IF              reduce using rule 24 (factor -> IDENTIFIER .)
+    NOT             reduce using rule 24 (factor -> IDENTIFIER .)
+    BOOL            reduce using rule 24 (factor -> IDENTIFIER .)
+    NUMBER          reduce using rule 24 (factor -> IDENTIFIER .)
+    STRING          reduce using rule 24 (factor -> IDENTIFIER .)
+    LPAREN          reduce using rule 24 (factor -> IDENTIFIER .)
+    $end            reduce using rule 24 (factor -> IDENTIFIER .)
+    ELSE            reduce using rule 24 (factor -> IDENTIFIER .)
 
 
 state 31
 
-    (8) expression -> expression MINUS expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (20) expression -> NOT expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 8 (expression -> expression MINUS expression .)
-    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
-    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
-    AND             reduce using rule 8 (expression -> expression MINUS expression .)
-    OR              reduce using rule 8 (expression -> expression MINUS expression .)
-    EQ              reduce using rule 8 (expression -> expression MINUS expression .)
-    NE              reduce using rule 8 (expression -> expression MINUS expression .)
-    LT              reduce using rule 8 (expression -> expression MINUS expression .)
-    GT              reduce using rule 8 (expression -> expression MINUS expression .)
-    LE              reduce using rule 8 (expression -> expression MINUS expression .)
-    GE              reduce using rule 8 (expression -> expression MINUS expression .)
-    IDENTIFIER      reduce using rule 8 (expression -> expression MINUS expression .)
-    NOT             reduce using rule 8 (expression -> expression MINUS expression .)
-    BOOL            reduce using rule 8 (expression -> expression MINUS expression .)
-    NUMBER          reduce using rule 8 (expression -> expression MINUS expression .)
-    STRING          reduce using rule 8 (expression -> expression MINUS expression .)
-    LPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
-    $end            reduce using rule 8 (expression -> expression MINUS expression .)
-    RPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
+    SEMICOLON       reduce using rule 20 (expression -> NOT expression .)
+    PLUS            reduce using rule 20 (expression -> NOT expression .)
+    MINUS           reduce using rule 20 (expression -> NOT expression .)
+    MUL             reduce using rule 20 (expression -> NOT expression .)
+    DIV             reduce using rule 20 (expression -> NOT expression .)
+    AND             reduce using rule 20 (expression -> NOT expression .)
+    OR              reduce using rule 20 (expression -> NOT expression .)
+    EQ              reduce using rule 20 (expression -> NOT expression .)
+    NE              reduce using rule 20 (expression -> NOT expression .)
+    LT              reduce using rule 20 (expression -> NOT expression .)
+    GT              reduce using rule 20 (expression -> NOT expression .)
+    LE              reduce using rule 20 (expression -> NOT expression .)
+    GE              reduce using rule 20 (expression -> NOT expression .)
+    IDENTIFIER      reduce using rule 20 (expression -> NOT expression .)
+    IF              reduce using rule 20 (expression -> NOT expression .)
+    NOT             reduce using rule 20 (expression -> NOT expression .)
+    BOOL            reduce using rule 20 (expression -> NOT expression .)
+    NUMBER          reduce using rule 20 (expression -> NOT expression .)
+    STRING          reduce using rule 20 (expression -> NOT expression .)
+    LPAREN          reduce using rule 20 (expression -> NOT expression .)
+    $end            reduce using rule 20 (expression -> NOT expression .)
+    RPAREN          reduce using rule 20 (expression -> NOT expression .)
+    ELSE            reduce using rule 20 (expression -> NOT expression .)
 
-  ! MUL             [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! DIV             [ reduce using rule 8 (expression -> expression MINUS expression .) ]
-  ! PLUS            [ shift and go to state 14 ]
-  ! MINUS           [ shift and go to state 15 ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! PLUS            [ shift and go to state 15 ]
+  ! MINUS           [ shift and go to state 16 ]
+  ! MUL             [ shift and go to state 17 ]
+  ! DIV             [ shift and go to state 18 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 32
 
-    (9) expression -> expression MUL expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (8) expression -> expression PLUS expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 9 (expression -> expression MUL expression .)
-    PLUS            reduce using rule 9 (expression -> expression MUL expression .)
-    MINUS           reduce using rule 9 (expression -> expression MUL expression .)
-    MUL             reduce using rule 9 (expression -> expression MUL expression .)
-    DIV             reduce using rule 9 (expression -> expression MUL expression .)
-    AND             reduce using rule 9 (expression -> expression MUL expression .)
-    OR              reduce using rule 9 (expression -> expression MUL expression .)
-    EQ              reduce using rule 9 (expression -> expression MUL expression .)
-    NE              reduce using rule 9 (expression -> expression MUL expression .)
-    LT              reduce using rule 9 (expression -> expression MUL expression .)
-    GT              reduce using rule 9 (expression -> expression MUL expression .)
-    LE              reduce using rule 9 (expression -> expression MUL expression .)
-    GE              reduce using rule 9 (expression -> expression MUL expression .)
-    IDENTIFIER      reduce using rule 9 (expression -> expression MUL expression .)
-    NOT             reduce using rule 9 (expression -> expression MUL expression .)
-    BOOL            reduce using rule 9 (expression -> expression MUL expression .)
-    NUMBER          reduce using rule 9 (expression -> expression MUL expression .)
-    STRING          reduce using rule 9 (expression -> expression MUL expression .)
-    LPAREN          reduce using rule 9 (expression -> expression MUL expression .)
-    $end            reduce using rule 9 (expression -> expression MUL expression .)
-    RPAREN          reduce using rule 9 (expression -> expression MUL expression .)
+    SEMICOLON       reduce using rule 8 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 8 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 8 (expression -> expression PLUS expression .)
+    AND             reduce using rule 8 (expression -> expression PLUS expression .)
+    OR              reduce using rule 8 (expression -> expression PLUS expression .)
+    EQ              reduce using rule 8 (expression -> expression PLUS expression .)
+    NE              reduce using rule 8 (expression -> expression PLUS expression .)
+    LT              reduce using rule 8 (expression -> expression PLUS expression .)
+    GT              reduce using rule 8 (expression -> expression PLUS expression .)
+    LE              reduce using rule 8 (expression -> expression PLUS expression .)
+    GE              reduce using rule 8 (expression -> expression PLUS expression .)
+    IDENTIFIER      reduce using rule 8 (expression -> expression PLUS expression .)
+    IF              reduce using rule 8 (expression -> expression PLUS expression .)
+    NOT             reduce using rule 8 (expression -> expression PLUS expression .)
+    BOOL            reduce using rule 8 (expression -> expression PLUS expression .)
+    NUMBER          reduce using rule 8 (expression -> expression PLUS expression .)
+    STRING          reduce using rule 8 (expression -> expression PLUS expression .)
+    LPAREN          reduce using rule 8 (expression -> expression PLUS expression .)
+    $end            reduce using rule 8 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 8 (expression -> expression PLUS expression .)
+    ELSE            reduce using rule 8 (expression -> expression PLUS expression .)
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
 
-  ! PLUS            [ shift and go to state 14 ]
-  ! MINUS           [ shift and go to state 15 ]
-  ! MUL             [ shift and go to state 16 ]
-  ! DIV             [ shift and go to state 17 ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! MUL             [ reduce using rule 8 (expression -> expression PLUS expression .) ]
+  ! DIV             [ reduce using rule 8 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 15 ]
+  ! MINUS           [ shift and go to state 16 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 33
 
-    (10) expression -> expression DIV expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (9) expression -> expression MINUS expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 10 (expression -> expression DIV expression .)
-    PLUS            reduce using rule 10 (expression -> expression DIV expression .)
-    MINUS           reduce using rule 10 (expression -> expression DIV expression .)
-    MUL             reduce using rule 10 (expression -> expression DIV expression .)
-    DIV             reduce using rule 10 (expression -> expression DIV expression .)
-    AND             reduce using rule 10 (expression -> expression DIV expression .)
-    OR              reduce using rule 10 (expression -> expression DIV expression .)
-    EQ              reduce using rule 10 (expression -> expression DIV expression .)
-    NE              reduce using rule 10 (expression -> expression DIV expression .)
-    LT              reduce using rule 10 (expression -> expression DIV expression .)
-    GT              reduce using rule 10 (expression -> expression DIV expression .)
-    LE              reduce using rule 10 (expression -> expression DIV expression .)
-    GE              reduce using rule 10 (expression -> expression DIV expression .)
-    IDENTIFIER      reduce using rule 10 (expression -> expression DIV expression .)
-    NOT             reduce using rule 10 (expression -> expression DIV expression .)
-    BOOL            reduce using rule 10 (expression -> expression DIV expression .)
-    NUMBER          reduce using rule 10 (expression -> expression DIV expression .)
-    STRING          reduce using rule 10 (expression -> expression DIV expression .)
-    LPAREN          reduce using rule 10 (expression -> expression DIV expression .)
-    $end            reduce using rule 10 (expression -> expression DIV expression .)
-    RPAREN          reduce using rule 10 (expression -> expression DIV expression .)
+    SEMICOLON       reduce using rule 9 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 9 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 9 (expression -> expression MINUS expression .)
+    AND             reduce using rule 9 (expression -> expression MINUS expression .)
+    OR              reduce using rule 9 (expression -> expression MINUS expression .)
+    EQ              reduce using rule 9 (expression -> expression MINUS expression .)
+    NE              reduce using rule 9 (expression -> expression MINUS expression .)
+    LT              reduce using rule 9 (expression -> expression MINUS expression .)
+    GT              reduce using rule 9 (expression -> expression MINUS expression .)
+    LE              reduce using rule 9 (expression -> expression MINUS expression .)
+    GE              reduce using rule 9 (expression -> expression MINUS expression .)
+    IDENTIFIER      reduce using rule 9 (expression -> expression MINUS expression .)
+    IF              reduce using rule 9 (expression -> expression MINUS expression .)
+    NOT             reduce using rule 9 (expression -> expression MINUS expression .)
+    BOOL            reduce using rule 9 (expression -> expression MINUS expression .)
+    NUMBER          reduce using rule 9 (expression -> expression MINUS expression .)
+    STRING          reduce using rule 9 (expression -> expression MINUS expression .)
+    LPAREN          reduce using rule 9 (expression -> expression MINUS expression .)
+    $end            reduce using rule 9 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 9 (expression -> expression MINUS expression .)
+    ELSE            reduce using rule 9 (expression -> expression MINUS expression .)
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
 
-  ! PLUS            [ shift and go to state 14 ]
-  ! MINUS           [ shift and go to state 15 ]
-  ! MUL             [ shift and go to state 16 ]
-  ! DIV             [ shift and go to state 17 ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! MUL             [ reduce using rule 9 (expression -> expression MINUS expression .) ]
+  ! DIV             [ reduce using rule 9 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 15 ]
+  ! MINUS           [ shift and go to state 16 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 34
 
-    (11) expression -> expression AND expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (10) expression -> expression MUL expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 11 (expression -> expression AND expression .)
-    AND             reduce using rule 11 (expression -> expression AND expression .)
-    OR              reduce using rule 11 (expression -> expression AND expression .)
-    IDENTIFIER      reduce using rule 11 (expression -> expression AND expression .)
-    NOT             reduce using rule 11 (expression -> expression AND expression .)
-    BOOL            reduce using rule 11 (expression -> expression AND expression .)
-    NUMBER          reduce using rule 11 (expression -> expression AND expression .)
-    STRING          reduce using rule 11 (expression -> expression AND expression .)
-    LPAREN          reduce using rule 11 (expression -> expression AND expression .)
-    $end            reduce using rule 11 (expression -> expression AND expression .)
-    RPAREN          reduce using rule 11 (expression -> expression AND expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    EQ              shift and go to state 20
-    NE              shift and go to state 21
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    SEMICOLON       reduce using rule 10 (expression -> expression MUL expression .)
+    PLUS            reduce using rule 10 (expression -> expression MUL expression .)
+    MINUS           reduce using rule 10 (expression -> expression MUL expression .)
+    MUL             reduce using rule 10 (expression -> expression MUL expression .)
+    DIV             reduce using rule 10 (expression -> expression MUL expression .)
+    AND             reduce using rule 10 (expression -> expression MUL expression .)
+    OR              reduce using rule 10 (expression -> expression MUL expression .)
+    EQ              reduce using rule 10 (expression -> expression MUL expression .)
+    NE              reduce using rule 10 (expression -> expression MUL expression .)
+    LT              reduce using rule 10 (expression -> expression MUL expression .)
+    GT              reduce using rule 10 (expression -> expression MUL expression .)
+    LE              reduce using rule 10 (expression -> expression MUL expression .)
+    GE              reduce using rule 10 (expression -> expression MUL expression .)
+    IDENTIFIER      reduce using rule 10 (expression -> expression MUL expression .)
+    IF              reduce using rule 10 (expression -> expression MUL expression .)
+    NOT             reduce using rule 10 (expression -> expression MUL expression .)
+    BOOL            reduce using rule 10 (expression -> expression MUL expression .)
+    NUMBER          reduce using rule 10 (expression -> expression MUL expression .)
+    STRING          reduce using rule 10 (expression -> expression MUL expression .)
+    LPAREN          reduce using rule 10 (expression -> expression MUL expression .)
+    $end            reduce using rule 10 (expression -> expression MUL expression .)
+    RPAREN          reduce using rule 10 (expression -> expression MUL expression .)
+    ELSE            reduce using rule 10 (expression -> expression MUL expression .)
 
-  ! PLUS            [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! MINUS           [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! MUL             [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! DIV             [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! EQ              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! NE              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! LT              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! GT              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! LE              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! GE              [ reduce using rule 11 (expression -> expression AND expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
+  ! PLUS            [ shift and go to state 15 ]
+  ! MINUS           [ shift and go to state 16 ]
+  ! MUL             [ shift and go to state 17 ]
+  ! DIV             [ shift and go to state 18 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 35
 
-    (12) expression -> expression OR expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (11) expression -> expression DIV expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 12 (expression -> expression OR expression .)
-    OR              reduce using rule 12 (expression -> expression OR expression .)
-    IDENTIFIER      reduce using rule 12 (expression -> expression OR expression .)
-    NOT             reduce using rule 12 (expression -> expression OR expression .)
-    BOOL            reduce using rule 12 (expression -> expression OR expression .)
-    NUMBER          reduce using rule 12 (expression -> expression OR expression .)
-    STRING          reduce using rule 12 (expression -> expression OR expression .)
-    LPAREN          reduce using rule 12 (expression -> expression OR expression .)
-    $end            reduce using rule 12 (expression -> expression OR expression .)
-    RPAREN          reduce using rule 12 (expression -> expression OR expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    AND             shift and go to state 18
-    EQ              shift and go to state 20
-    NE              shift and go to state 21
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    SEMICOLON       reduce using rule 11 (expression -> expression DIV expression .)
+    PLUS            reduce using rule 11 (expression -> expression DIV expression .)
+    MINUS           reduce using rule 11 (expression -> expression DIV expression .)
+    MUL             reduce using rule 11 (expression -> expression DIV expression .)
+    DIV             reduce using rule 11 (expression -> expression DIV expression .)
+    AND             reduce using rule 11 (expression -> expression DIV expression .)
+    OR              reduce using rule 11 (expression -> expression DIV expression .)
+    EQ              reduce using rule 11 (expression -> expression DIV expression .)
+    NE              reduce using rule 11 (expression -> expression DIV expression .)
+    LT              reduce using rule 11 (expression -> expression DIV expression .)
+    GT              reduce using rule 11 (expression -> expression DIV expression .)
+    LE              reduce using rule 11 (expression -> expression DIV expression .)
+    GE              reduce using rule 11 (expression -> expression DIV expression .)
+    IDENTIFIER      reduce using rule 11 (expression -> expression DIV expression .)
+    IF              reduce using rule 11 (expression -> expression DIV expression .)
+    NOT             reduce using rule 11 (expression -> expression DIV expression .)
+    BOOL            reduce using rule 11 (expression -> expression DIV expression .)
+    NUMBER          reduce using rule 11 (expression -> expression DIV expression .)
+    STRING          reduce using rule 11 (expression -> expression DIV expression .)
+    LPAREN          reduce using rule 11 (expression -> expression DIV expression .)
+    $end            reduce using rule 11 (expression -> expression DIV expression .)
+    RPAREN          reduce using rule 11 (expression -> expression DIV expression .)
+    ELSE            reduce using rule 11 (expression -> expression DIV expression .)
 
-  ! PLUS            [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! MINUS           [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! MUL             [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! DIV             [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! AND             [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! EQ              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! NE              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! LT              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! GT              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! LE              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! GE              [ reduce using rule 12 (expression -> expression OR expression .) ]
-  ! OR              [ shift and go to state 19 ]
+  ! PLUS            [ shift and go to state 15 ]
+  ! MINUS           [ shift and go to state 16 ]
+  ! MUL             [ shift and go to state 17 ]
+  ! DIV             [ shift and go to state 18 ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 36
 
-    (13) expression -> expression EQ expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (12) expression -> expression AND expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 13 (expression -> expression EQ expression .)
-    AND             reduce using rule 13 (expression -> expression EQ expression .)
-    OR              reduce using rule 13 (expression -> expression EQ expression .)
-    EQ              reduce using rule 13 (expression -> expression EQ expression .)
-    NE              reduce using rule 13 (expression -> expression EQ expression .)
-    IDENTIFIER      reduce using rule 13 (expression -> expression EQ expression .)
-    NOT             reduce using rule 13 (expression -> expression EQ expression .)
-    BOOL            reduce using rule 13 (expression -> expression EQ expression .)
-    NUMBER          reduce using rule 13 (expression -> expression EQ expression .)
-    STRING          reduce using rule 13 (expression -> expression EQ expression .)
-    LPAREN          reduce using rule 13 (expression -> expression EQ expression .)
-    $end            reduce using rule 13 (expression -> expression EQ expression .)
-    RPAREN          reduce using rule 13 (expression -> expression EQ expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    SEMICOLON       reduce using rule 12 (expression -> expression AND expression .)
+    AND             reduce using rule 12 (expression -> expression AND expression .)
+    OR              reduce using rule 12 (expression -> expression AND expression .)
+    IDENTIFIER      reduce using rule 12 (expression -> expression AND expression .)
+    IF              reduce using rule 12 (expression -> expression AND expression .)
+    NOT             reduce using rule 12 (expression -> expression AND expression .)
+    BOOL            reduce using rule 12 (expression -> expression AND expression .)
+    NUMBER          reduce using rule 12 (expression -> expression AND expression .)
+    STRING          reduce using rule 12 (expression -> expression AND expression .)
+    LPAREN          reduce using rule 12 (expression -> expression AND expression .)
+    $end            reduce using rule 12 (expression -> expression AND expression .)
+    RPAREN          reduce using rule 12 (expression -> expression AND expression .)
+    ELSE            reduce using rule 12 (expression -> expression AND expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
-  ! PLUS            [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! MINUS           [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! MUL             [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! DIV             [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! LT              [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! GT              [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! LE              [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! GE              [ reduce using rule 13 (expression -> expression EQ expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
+  ! PLUS            [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! MINUS           [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! MUL             [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! DIV             [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! EQ              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! NE              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! LT              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! GT              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! LE              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! GE              [ reduce using rule 12 (expression -> expression AND expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
 
 
 state 37
 
-    (14) expression -> expression NE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (13) expression -> expression OR expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 14 (expression -> expression NE expression .)
-    AND             reduce using rule 14 (expression -> expression NE expression .)
-    OR              reduce using rule 14 (expression -> expression NE expression .)
-    EQ              reduce using rule 14 (expression -> expression NE expression .)
-    NE              reduce using rule 14 (expression -> expression NE expression .)
-    IDENTIFIER      reduce using rule 14 (expression -> expression NE expression .)
-    NOT             reduce using rule 14 (expression -> expression NE expression .)
-    BOOL            reduce using rule 14 (expression -> expression NE expression .)
-    NUMBER          reduce using rule 14 (expression -> expression NE expression .)
-    STRING          reduce using rule 14 (expression -> expression NE expression .)
-    LPAREN          reduce using rule 14 (expression -> expression NE expression .)
-    $end            reduce using rule 14 (expression -> expression NE expression .)
-    RPAREN          reduce using rule 14 (expression -> expression NE expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    SEMICOLON       reduce using rule 13 (expression -> expression OR expression .)
+    OR              reduce using rule 13 (expression -> expression OR expression .)
+    IDENTIFIER      reduce using rule 13 (expression -> expression OR expression .)
+    IF              reduce using rule 13 (expression -> expression OR expression .)
+    NOT             reduce using rule 13 (expression -> expression OR expression .)
+    BOOL            reduce using rule 13 (expression -> expression OR expression .)
+    NUMBER          reduce using rule 13 (expression -> expression OR expression .)
+    STRING          reduce using rule 13 (expression -> expression OR expression .)
+    LPAREN          reduce using rule 13 (expression -> expression OR expression .)
+    $end            reduce using rule 13 (expression -> expression OR expression .)
+    RPAREN          reduce using rule 13 (expression -> expression OR expression .)
+    ELSE            reduce using rule 13 (expression -> expression OR expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
-  ! PLUS            [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! MINUS           [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! MUL             [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! DIV             [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! LT              [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! GT              [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! LE              [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! GE              [ reduce using rule 14 (expression -> expression NE expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
+  ! PLUS            [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! MINUS           [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! MUL             [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! DIV             [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! AND             [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! EQ              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! NE              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! LT              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! GT              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! LE              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! GE              [ reduce using rule 13 (expression -> expression OR expression .) ]
+  ! OR              [ shift and go to state 20 ]
 
 
 state 38
 
-    (15) expression -> expression LT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (14) expression -> expression EQ expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 15 (expression -> expression LT expression .)
-    AND             reduce using rule 15 (expression -> expression LT expression .)
-    OR              reduce using rule 15 (expression -> expression LT expression .)
-    EQ              reduce using rule 15 (expression -> expression LT expression .)
-    NE              reduce using rule 15 (expression -> expression LT expression .)
-    LT              reduce using rule 15 (expression -> expression LT expression .)
-    GT              reduce using rule 15 (expression -> expression LT expression .)
-    LE              reduce using rule 15 (expression -> expression LT expression .)
-    GE              reduce using rule 15 (expression -> expression LT expression .)
-    IDENTIFIER      reduce using rule 15 (expression -> expression LT expression .)
-    NOT             reduce using rule 15 (expression -> expression LT expression .)
-    BOOL            reduce using rule 15 (expression -> expression LT expression .)
-    NUMBER          reduce using rule 15 (expression -> expression LT expression .)
-    STRING          reduce using rule 15 (expression -> expression LT expression .)
-    LPAREN          reduce using rule 15 (expression -> expression LT expression .)
-    $end            reduce using rule 15 (expression -> expression LT expression .)
-    RPAREN          reduce using rule 15 (expression -> expression LT expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
+    SEMICOLON       reduce using rule 14 (expression -> expression EQ expression .)
+    AND             reduce using rule 14 (expression -> expression EQ expression .)
+    OR              reduce using rule 14 (expression -> expression EQ expression .)
+    EQ              reduce using rule 14 (expression -> expression EQ expression .)
+    NE              reduce using rule 14 (expression -> expression EQ expression .)
+    IDENTIFIER      reduce using rule 14 (expression -> expression EQ expression .)
+    IF              reduce using rule 14 (expression -> expression EQ expression .)
+    NOT             reduce using rule 14 (expression -> expression EQ expression .)
+    BOOL            reduce using rule 14 (expression -> expression EQ expression .)
+    NUMBER          reduce using rule 14 (expression -> expression EQ expression .)
+    STRING          reduce using rule 14 (expression -> expression EQ expression .)
+    LPAREN          reduce using rule 14 (expression -> expression EQ expression .)
+    $end            reduce using rule 14 (expression -> expression EQ expression .)
+    RPAREN          reduce using rule 14 (expression -> expression EQ expression .)
+    ELSE            reduce using rule 14 (expression -> expression EQ expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
-  ! PLUS            [ reduce using rule 15 (expression -> expression LT expression .) ]
-  ! MINUS           [ reduce using rule 15 (expression -> expression LT expression .) ]
-  ! MUL             [ reduce using rule 15 (expression -> expression LT expression .) ]
-  ! DIV             [ reduce using rule 15 (expression -> expression LT expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! PLUS            [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! MINUS           [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! MUL             [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! DIV             [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! LT              [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! GT              [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! LE              [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! GE              [ reduce using rule 14 (expression -> expression EQ expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
 
 
 state 39
 
-    (16) expression -> expression GT expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (15) expression -> expression NE expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 16 (expression -> expression GT expression .)
-    AND             reduce using rule 16 (expression -> expression GT expression .)
-    OR              reduce using rule 16 (expression -> expression GT expression .)
-    EQ              reduce using rule 16 (expression -> expression GT expression .)
-    NE              reduce using rule 16 (expression -> expression GT expression .)
-    LT              reduce using rule 16 (expression -> expression GT expression .)
-    GT              reduce using rule 16 (expression -> expression GT expression .)
-    LE              reduce using rule 16 (expression -> expression GT expression .)
-    GE              reduce using rule 16 (expression -> expression GT expression .)
-    IDENTIFIER      reduce using rule 16 (expression -> expression GT expression .)
-    NOT             reduce using rule 16 (expression -> expression GT expression .)
-    BOOL            reduce using rule 16 (expression -> expression GT expression .)
-    NUMBER          reduce using rule 16 (expression -> expression GT expression .)
-    STRING          reduce using rule 16 (expression -> expression GT expression .)
-    LPAREN          reduce using rule 16 (expression -> expression GT expression .)
-    $end            reduce using rule 16 (expression -> expression GT expression .)
-    RPAREN          reduce using rule 16 (expression -> expression GT expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
+    SEMICOLON       reduce using rule 15 (expression -> expression NE expression .)
+    AND             reduce using rule 15 (expression -> expression NE expression .)
+    OR              reduce using rule 15 (expression -> expression NE expression .)
+    EQ              reduce using rule 15 (expression -> expression NE expression .)
+    NE              reduce using rule 15 (expression -> expression NE expression .)
+    IDENTIFIER      reduce using rule 15 (expression -> expression NE expression .)
+    IF              reduce using rule 15 (expression -> expression NE expression .)
+    NOT             reduce using rule 15 (expression -> expression NE expression .)
+    BOOL            reduce using rule 15 (expression -> expression NE expression .)
+    NUMBER          reduce using rule 15 (expression -> expression NE expression .)
+    STRING          reduce using rule 15 (expression -> expression NE expression .)
+    LPAREN          reduce using rule 15 (expression -> expression NE expression .)
+    $end            reduce using rule 15 (expression -> expression NE expression .)
+    RPAREN          reduce using rule 15 (expression -> expression NE expression .)
+    ELSE            reduce using rule 15 (expression -> expression NE expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
 
-  ! PLUS            [ reduce using rule 16 (expression -> expression GT expression .) ]
-  ! MINUS           [ reduce using rule 16 (expression -> expression GT expression .) ]
-  ! MUL             [ reduce using rule 16 (expression -> expression GT expression .) ]
-  ! DIV             [ reduce using rule 16 (expression -> expression GT expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! PLUS            [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! MINUS           [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! MUL             [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! DIV             [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! LT              [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! GT              [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! LE              [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! GE              [ reduce using rule 15 (expression -> expression NE expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
 
 
 state 40
 
-    (17) expression -> expression LE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (16) expression -> expression LT expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 17 (expression -> expression LE expression .)
-    AND             reduce using rule 17 (expression -> expression LE expression .)
-    OR              reduce using rule 17 (expression -> expression LE expression .)
-    EQ              reduce using rule 17 (expression -> expression LE expression .)
-    NE              reduce using rule 17 (expression -> expression LE expression .)
-    LT              reduce using rule 17 (expression -> expression LE expression .)
-    GT              reduce using rule 17 (expression -> expression LE expression .)
-    LE              reduce using rule 17 (expression -> expression LE expression .)
-    GE              reduce using rule 17 (expression -> expression LE expression .)
-    IDENTIFIER      reduce using rule 17 (expression -> expression LE expression .)
-    NOT             reduce using rule 17 (expression -> expression LE expression .)
-    BOOL            reduce using rule 17 (expression -> expression LE expression .)
-    NUMBER          reduce using rule 17 (expression -> expression LE expression .)
-    STRING          reduce using rule 17 (expression -> expression LE expression .)
-    LPAREN          reduce using rule 17 (expression -> expression LE expression .)
-    $end            reduce using rule 17 (expression -> expression LE expression .)
-    RPAREN          reduce using rule 17 (expression -> expression LE expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
+    SEMICOLON       reduce using rule 16 (expression -> expression LT expression .)
+    AND             reduce using rule 16 (expression -> expression LT expression .)
+    OR              reduce using rule 16 (expression -> expression LT expression .)
+    EQ              reduce using rule 16 (expression -> expression LT expression .)
+    NE              reduce using rule 16 (expression -> expression LT expression .)
+    LT              reduce using rule 16 (expression -> expression LT expression .)
+    GT              reduce using rule 16 (expression -> expression LT expression .)
+    LE              reduce using rule 16 (expression -> expression LT expression .)
+    GE              reduce using rule 16 (expression -> expression LT expression .)
+    IDENTIFIER      reduce using rule 16 (expression -> expression LT expression .)
+    IF              reduce using rule 16 (expression -> expression LT expression .)
+    NOT             reduce using rule 16 (expression -> expression LT expression .)
+    BOOL            reduce using rule 16 (expression -> expression LT expression .)
+    NUMBER          reduce using rule 16 (expression -> expression LT expression .)
+    STRING          reduce using rule 16 (expression -> expression LT expression .)
+    LPAREN          reduce using rule 16 (expression -> expression LT expression .)
+    $end            reduce using rule 16 (expression -> expression LT expression .)
+    RPAREN          reduce using rule 16 (expression -> expression LT expression .)
+    ELSE            reduce using rule 16 (expression -> expression LT expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
 
-  ! PLUS            [ reduce using rule 17 (expression -> expression LE expression .) ]
-  ! MINUS           [ reduce using rule 17 (expression -> expression LE expression .) ]
-  ! MUL             [ reduce using rule 17 (expression -> expression LE expression .) ]
-  ! DIV             [ reduce using rule 17 (expression -> expression LE expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! PLUS            [ reduce using rule 16 (expression -> expression LT expression .) ]
+  ! MINUS           [ reduce using rule 16 (expression -> expression LT expression .) ]
+  ! MUL             [ reduce using rule 16 (expression -> expression LT expression .) ]
+  ! DIV             [ reduce using rule 16 (expression -> expression LT expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 41
 
-    (18) expression -> expression GE expression .
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (17) expression -> expression GT expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 18 (expression -> expression GE expression .)
-    AND             reduce using rule 18 (expression -> expression GE expression .)
-    OR              reduce using rule 18 (expression -> expression GE expression .)
-    EQ              reduce using rule 18 (expression -> expression GE expression .)
-    NE              reduce using rule 18 (expression -> expression GE expression .)
-    LT              reduce using rule 18 (expression -> expression GE expression .)
-    GT              reduce using rule 18 (expression -> expression GE expression .)
-    LE              reduce using rule 18 (expression -> expression GE expression .)
-    GE              reduce using rule 18 (expression -> expression GE expression .)
-    IDENTIFIER      reduce using rule 18 (expression -> expression GE expression .)
-    NOT             reduce using rule 18 (expression -> expression GE expression .)
-    BOOL            reduce using rule 18 (expression -> expression GE expression .)
-    NUMBER          reduce using rule 18 (expression -> expression GE expression .)
-    STRING          reduce using rule 18 (expression -> expression GE expression .)
-    LPAREN          reduce using rule 18 (expression -> expression GE expression .)
-    $end            reduce using rule 18 (expression -> expression GE expression .)
-    RPAREN          reduce using rule 18 (expression -> expression GE expression .)
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
+    SEMICOLON       reduce using rule 17 (expression -> expression GT expression .)
+    AND             reduce using rule 17 (expression -> expression GT expression .)
+    OR              reduce using rule 17 (expression -> expression GT expression .)
+    EQ              reduce using rule 17 (expression -> expression GT expression .)
+    NE              reduce using rule 17 (expression -> expression GT expression .)
+    LT              reduce using rule 17 (expression -> expression GT expression .)
+    GT              reduce using rule 17 (expression -> expression GT expression .)
+    LE              reduce using rule 17 (expression -> expression GT expression .)
+    GE              reduce using rule 17 (expression -> expression GT expression .)
+    IDENTIFIER      reduce using rule 17 (expression -> expression GT expression .)
+    IF              reduce using rule 17 (expression -> expression GT expression .)
+    NOT             reduce using rule 17 (expression -> expression GT expression .)
+    BOOL            reduce using rule 17 (expression -> expression GT expression .)
+    NUMBER          reduce using rule 17 (expression -> expression GT expression .)
+    STRING          reduce using rule 17 (expression -> expression GT expression .)
+    LPAREN          reduce using rule 17 (expression -> expression GT expression .)
+    $end            reduce using rule 17 (expression -> expression GT expression .)
+    RPAREN          reduce using rule 17 (expression -> expression GT expression .)
+    ELSE            reduce using rule 17 (expression -> expression GT expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
 
-  ! PLUS            [ reduce using rule 18 (expression -> expression GE expression .) ]
-  ! MINUS           [ reduce using rule 18 (expression -> expression GE expression .) ]
-  ! MUL             [ reduce using rule 18 (expression -> expression GE expression .) ]
-  ! DIV             [ reduce using rule 18 (expression -> expression GE expression .) ]
-  ! AND             [ shift and go to state 18 ]
-  ! OR              [ shift and go to state 19 ]
-  ! EQ              [ shift and go to state 20 ]
-  ! NE              [ shift and go to state 21 ]
-  ! LT              [ shift and go to state 22 ]
-  ! GT              [ shift and go to state 23 ]
-  ! LE              [ shift and go to state 24 ]
-  ! GE              [ shift and go to state 25 ]
+  ! PLUS            [ reduce using rule 17 (expression -> expression GT expression .) ]
+  ! MINUS           [ reduce using rule 17 (expression -> expression GT expression .) ]
+  ! MUL             [ reduce using rule 17 (expression -> expression GT expression .) ]
+  ! DIV             [ reduce using rule 17 (expression -> expression GT expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 42
 
-    (6) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
-    (7) expression -> expression . PLUS expression
-    (8) expression -> expression . MINUS expression
-    (9) expression -> expression . MUL expression
-    (10) expression -> expression . DIV expression
-    (11) expression -> expression . AND expression
-    (12) expression -> expression . OR expression
-    (13) expression -> expression . EQ expression
-    (14) expression -> expression . NE expression
-    (15) expression -> expression . LT expression
-    (16) expression -> expression . GT expression
-    (17) expression -> expression . LE expression
-    (18) expression -> expression . GE expression
+    (18) expression -> expression LE expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       shift and go to state 44
-    PLUS            shift and go to state 14
-    MINUS           shift and go to state 15
-    MUL             shift and go to state 16
-    DIV             shift and go to state 17
-    AND             shift and go to state 18
-    OR              shift and go to state 19
-    EQ              shift and go to state 20
-    NE              shift and go to state 21
-    LT              shift and go to state 22
-    GT              shift and go to state 23
-    LE              shift and go to state 24
-    GE              shift and go to state 25
+    SEMICOLON       reduce using rule 18 (expression -> expression LE expression .)
+    AND             reduce using rule 18 (expression -> expression LE expression .)
+    OR              reduce using rule 18 (expression -> expression LE expression .)
+    EQ              reduce using rule 18 (expression -> expression LE expression .)
+    NE              reduce using rule 18 (expression -> expression LE expression .)
+    LT              reduce using rule 18 (expression -> expression LE expression .)
+    GT              reduce using rule 18 (expression -> expression LE expression .)
+    LE              reduce using rule 18 (expression -> expression LE expression .)
+    GE              reduce using rule 18 (expression -> expression LE expression .)
+    IDENTIFIER      reduce using rule 18 (expression -> expression LE expression .)
+    IF              reduce using rule 18 (expression -> expression LE expression .)
+    NOT             reduce using rule 18 (expression -> expression LE expression .)
+    BOOL            reduce using rule 18 (expression -> expression LE expression .)
+    NUMBER          reduce using rule 18 (expression -> expression LE expression .)
+    STRING          reduce using rule 18 (expression -> expression LE expression .)
+    LPAREN          reduce using rule 18 (expression -> expression LE expression .)
+    $end            reduce using rule 18 (expression -> expression LE expression .)
+    RPAREN          reduce using rule 18 (expression -> expression LE expression .)
+    ELSE            reduce using rule 18 (expression -> expression LE expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+
+  ! PLUS            [ reduce using rule 18 (expression -> expression LE expression .) ]
+  ! MINUS           [ reduce using rule 18 (expression -> expression LE expression .) ]
+  ! MUL             [ reduce using rule 18 (expression -> expression LE expression .) ]
+  ! DIV             [ reduce using rule 18 (expression -> expression LE expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 43
 
-    (25) factor -> LPAREN expression RPAREN .
+    (19) expression -> expression GE expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
 
-    SEMICOLON       reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    PLUS            reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    MINUS           reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    MUL             reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    DIV             reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    AND             reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    OR              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    EQ              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    NE              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    LT              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    GT              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    LE              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    GE              reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    IDENTIFIER      reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    NOT             reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    BOOL            reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    NUMBER          reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    STRING          reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    LPAREN          reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    $end            reduce using rule 25 (factor -> LPAREN expression RPAREN .)
-    RPAREN          reduce using rule 25 (factor -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 19 (expression -> expression GE expression .)
+    AND             reduce using rule 19 (expression -> expression GE expression .)
+    OR              reduce using rule 19 (expression -> expression GE expression .)
+    EQ              reduce using rule 19 (expression -> expression GE expression .)
+    NE              reduce using rule 19 (expression -> expression GE expression .)
+    LT              reduce using rule 19 (expression -> expression GE expression .)
+    GT              reduce using rule 19 (expression -> expression GE expression .)
+    LE              reduce using rule 19 (expression -> expression GE expression .)
+    GE              reduce using rule 19 (expression -> expression GE expression .)
+    IDENTIFIER      reduce using rule 19 (expression -> expression GE expression .)
+    IF              reduce using rule 19 (expression -> expression GE expression .)
+    NOT             reduce using rule 19 (expression -> expression GE expression .)
+    BOOL            reduce using rule 19 (expression -> expression GE expression .)
+    NUMBER          reduce using rule 19 (expression -> expression GE expression .)
+    STRING          reduce using rule 19 (expression -> expression GE expression .)
+    LPAREN          reduce using rule 19 (expression -> expression GE expression .)
+    $end            reduce using rule 19 (expression -> expression GE expression .)
+    RPAREN          reduce using rule 19 (expression -> expression GE expression .)
+    ELSE            reduce using rule 19 (expression -> expression GE expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+
+  ! PLUS            [ reduce using rule 19 (expression -> expression GE expression .) ]
+  ! MINUS           [ reduce using rule 19 (expression -> expression GE expression .) ]
+  ! MUL             [ reduce using rule 19 (expression -> expression GE expression .) ]
+  ! DIV             [ reduce using rule 19 (expression -> expression GE expression .) ]
+  ! AND             [ shift and go to state 19 ]
+  ! OR              [ shift and go to state 20 ]
+  ! EQ              [ shift and go to state 21 ]
+  ! NE              [ shift and go to state 22 ]
+  ! LT              [ shift and go to state 23 ]
+  ! GT              [ shift and go to state 24 ]
+  ! LE              [ shift and go to state 25 ]
+  ! GE              [ shift and go to state 26 ]
 
 
 state 44
 
+    (6) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
+
+    SEMICOLON       shift and go to state 47
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
+
+
+state 45
+
+    (7) expression -> IF LPAREN expression . RPAREN expression ELSE expression
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
+
+    RPAREN          shift and go to state 48
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
+
+
+state 46
+
+    (26) factor -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    MUL             reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    DIV             reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    AND             reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    OR              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    EQ              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    NE              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    LT              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    GT              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    LE              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    GE              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    IDENTIFIER      reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    IF              reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    NOT             reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    BOOL            reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    NUMBER          reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    STRING          reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+    ELSE            reduce using rule 26 (factor -> LPAREN expression RPAREN .)
+
+
+state 47
+
     (6) assignment -> IDENTIFIER EQUALS expression SEMICOLON .
 
     IDENTIFIER      reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    IF              reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     NOT             reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     BOOL            reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     NUMBER          reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
@@ -1663,3 +1816,185 @@ state 44
     LPAREN          reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
     $end            reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
 
+
+state 48
+
+    (7) expression -> IF LPAREN expression RPAREN . expression ELSE expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
+
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
+
+    expression                     shift and go to state 49
+    factor                         shift and go to state 9
+
+state 49
+
+    (7) expression -> IF LPAREN expression RPAREN expression . ELSE expression
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
+
+    ELSE            shift and go to state 50
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
+
+
+state 50
+
+    (7) expression -> IF LPAREN expression RPAREN expression ELSE . expression
+    (7) expression -> . IF LPAREN expression RPAREN expression ELSE expression
+    (8) expression -> . expression PLUS expression
+    (9) expression -> . expression MINUS expression
+    (10) expression -> . expression MUL expression
+    (11) expression -> . expression DIV expression
+    (12) expression -> . expression AND expression
+    (13) expression -> . expression OR expression
+    (14) expression -> . expression EQ expression
+    (15) expression -> . expression NE expression
+    (16) expression -> . expression LT expression
+    (17) expression -> . expression GT expression
+    (18) expression -> . expression LE expression
+    (19) expression -> . expression GE expression
+    (20) expression -> . NOT expression
+    (21) expression -> . factor
+    (22) factor -> . BOOL
+    (23) factor -> . NUMBER
+    (24) factor -> . IDENTIFIER
+    (25) factor -> . STRING
+    (26) factor -> . LPAREN expression RPAREN
+
+    IF              shift and go to state 6
+    NOT             shift and go to state 8
+    BOOL            shift and go to state 10
+    NUMBER          shift and go to state 11
+    IDENTIFIER      shift and go to state 30
+    STRING          shift and go to state 12
+    LPAREN          shift and go to state 7
+
+    expression                     shift and go to state 51
+    factor                         shift and go to state 9
+
+state 51
+
+    (7) expression -> IF LPAREN expression RPAREN expression ELSE expression .
+    (8) expression -> expression . PLUS expression
+    (9) expression -> expression . MINUS expression
+    (10) expression -> expression . MUL expression
+    (11) expression -> expression . DIV expression
+    (12) expression -> expression . AND expression
+    (13) expression -> expression . OR expression
+    (14) expression -> expression . EQ expression
+    (15) expression -> expression . NE expression
+    (16) expression -> expression . LT expression
+    (17) expression -> expression . GT expression
+    (18) expression -> expression . LE expression
+    (19) expression -> expression . GE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MUL resolved as shift
+  ! shift/reduce conflict for DIV resolved as shift
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+  ! shift/reduce conflict for EQ resolved as shift
+  ! shift/reduce conflict for NE resolved as shift
+  ! shift/reduce conflict for LT resolved as shift
+  ! shift/reduce conflict for GT resolved as shift
+  ! shift/reduce conflict for LE resolved as shift
+  ! shift/reduce conflict for GE resolved as shift
+    SEMICOLON       reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    IDENTIFIER      reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    IF              reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    NOT             reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    BOOL            reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    NUMBER          reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    STRING          reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    LPAREN          reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    $end            reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    RPAREN          reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    ELSE            reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .)
+    PLUS            shift and go to state 15
+    MINUS           shift and go to state 16
+    MUL             shift and go to state 17
+    DIV             shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+    EQ              shift and go to state 21
+    NE              shift and go to state 22
+    LT              shift and go to state 23
+    GT              shift and go to state 24
+    LE              shift and go to state 25
+    GE              shift and go to state 26
+
+  ! PLUS            [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! MINUS           [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! MUL             [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! DIV             [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! AND             [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! OR              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! EQ              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! NE              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! LT              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! GT              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! LE              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+  ! GE              [ reduce using rule 7 (expression -> IF LPAREN expression RPAREN expression ELSE expression .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 51 resolved as shift
+WARNING: shift/reduce conflict for MUL in state 51 resolved as shift
+WARNING: shift/reduce conflict for DIV in state 51 resolved as shift
+WARNING: shift/reduce conflict for AND in state 51 resolved as shift
+WARNING: shift/reduce conflict for OR in state 51 resolved as shift
+WARNING: shift/reduce conflict for EQ in state 51 resolved as shift
+WARNING: shift/reduce conflict for NE in state 51 resolved as shift
+WARNING: shift/reduce conflict for LT in state 51 resolved as shift
+WARNING: shift/reduce conflict for GT in state 51 resolved as shift
+WARNING: shift/reduce conflict for LE in state 51 resolved as shift
+WARNING: shift/reduce conflict for GE in state 51 resolved as shift
