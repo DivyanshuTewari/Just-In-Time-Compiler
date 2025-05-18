@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'programleftPLUSMINUSleftMULDIVnonassocLPARENRPARENDIV EQUALS IDENTIFIER LPAREN MINUS MUL NUMBER PLUS RPAREN SEMICOLON STRINGprogram : statement\n               | statement programstatement : assignment\n                 | expression SEMICOLON\n                 | expressionassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression MUL expression\n                  | expression DIV expressionexpression : factorfactor : NUMBERfactor : IDENTIFIERfactor : STRINGfactor : LPAREN expression RPAREN'
+_lr_signature = 'programleftORleftANDleftEQNEleftLTLEGTGEleftPLUSMINUSleftMULDIVrightNOTnonassocLPARENRPARENAND BOOL DIV EQ EQUALS GE GT IDENTIFIER LE LPAREN LT MINUS MUL NE NOT NUMBER OR PLUS RPAREN SEMICOLON STRINGprogram : statement\n               | statement programstatement : assignment\n                 | expression SEMICOLON\n                 | expressionassignment : IDENTIFIER EQUALS expression SEMICOLONexpression : expression PLUS expression\n                  | expression MINUS expression\n                  | expression MUL expression\n                  | expression DIV expression\n                  | expression AND expression\n                  | expression OR expression\n                  | expression EQ expression\n                  | expression NE expression\n                  | expression LT expression\n                  | expression GT expression\n                  | expression LE expression\n                  | expression GE expressionexpression : NOT expressionexpression : factorfactor : BOOLfactor : NUMBERfactor : IDENTIFIERfactor : STRINGfactor : LPAREN expression RPAREN'
     
-_lr_action_items = {'IDENTIFIER':([0,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,20,21,22,24,25,],[5,5,-3,-5,-13,-11,-12,-14,18,-4,18,18,18,18,18,-13,-7,-8,-9,-10,-15,-6,]),'NUMBER':([0,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,20,21,22,24,25,],[7,7,-3,-5,-13,-11,-12,-14,7,-4,7,7,7,7,7,-13,-7,-8,-9,-10,-15,-6,]),'STRING':([0,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,20,21,22,24,25,],[8,8,-3,-5,-13,-11,-12,-14,8,-4,8,8,8,8,8,-13,-7,-8,-9,-10,-15,-6,]),'LPAREN':([0,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,20,21,22,24,25,],[9,9,-3,-5,-13,-11,-12,-14,9,-4,9,9,9,9,9,-13,-7,-8,-9,-10,-15,-6,]),'$end':([1,2,3,4,5,6,7,8,10,11,18,19,20,21,22,24,25,],[0,-1,-3,-5,-13,-11,-12,-14,-2,-4,-13,-7,-8,-9,-10,-15,-6,]),'SEMICOLON':([4,5,6,7,8,18,19,20,21,22,23,24,],[11,-13,-11,-12,-14,-13,-7,-8,-9,-10,25,-15,]),'PLUS':([4,5,6,7,8,17,18,19,20,21,22,23,24,],[12,-13,-11,-12,-14,12,-13,-7,-8,-9,-10,12,-15,]),'MINUS':([4,5,6,7,8,17,18,19,20,21,22,23,24,],[13,-13,-11,-12,-14,13,-13,-7,-8,-9,-10,13,-15,]),'MUL':([4,5,6,7,8,17,18,19,20,21,22,23,24,],[14,-13,-11,-12,-14,14,-13,14,14,-9,-10,14,-15,]),'DIV':([4,5,6,7,8,17,18,19,20,21,22,23,24,],[15,-13,-11,-12,-14,15,-13,15,15,-9,-10,15,-15,]),'EQUALS':([5,],[16,]),'RPAREN':([6,7,8,17,18,19,20,21,22,24,],[-11,-12,-14,24,-13,-7,-8,-9,-10,-15,]),}
+_lr_action_items = {'IDENTIFIER':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[5,5,-3,-5,-23,28,-20,-21,-22,-24,28,-4,28,28,28,28,28,28,28,28,28,28,28,28,28,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'NOT':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[6,6,-3,-5,-23,6,-20,-21,-22,-24,6,-4,6,6,6,6,6,6,6,6,6,6,6,6,6,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'BOOL':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[8,8,-3,-5,-23,8,-20,-21,-22,-24,8,-4,8,8,8,8,8,8,8,8,8,8,8,8,8,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'NUMBER':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[9,9,-3,-5,-23,9,-20,-21,-22,-24,9,-4,9,9,9,9,9,9,9,9,9,9,9,9,9,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'STRING':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[10,10,-3,-5,-23,10,-20,-21,-22,-24,10,-4,10,10,10,10,10,10,10,10,10,10,10,10,10,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'LPAREN':([0,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[11,11,-3,-5,-23,11,-20,-21,-22,-24,11,-4,11,11,11,11,11,11,11,11,11,11,11,11,11,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'$end':([1,2,3,4,5,7,8,9,10,12,13,27,28,30,31,32,33,34,35,36,37,38,39,40,41,43,44,],[0,-1,-3,-5,-23,-20,-21,-22,-24,-2,-4,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,-6,]),'SEMICOLON':([4,5,7,8,9,10,27,28,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[13,-23,-20,-21,-22,-24,-19,-23,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,44,-25,]),'PLUS':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[14,-23,-20,-21,-22,-24,-19,-23,14,-7,-8,-9,-10,14,14,14,14,14,14,14,14,14,-25,]),'MINUS':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[15,-23,-20,-21,-22,-24,-19,-23,15,-7,-8,-9,-10,15,15,15,15,15,15,15,15,15,-25,]),'MUL':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[16,-23,-20,-21,-22,-24,-19,-23,16,16,16,-9,-10,16,16,16,16,16,16,16,16,16,-25,]),'DIV':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[17,-23,-20,-21,-22,-24,-19,-23,17,17,17,-9,-10,17,17,17,17,17,17,17,17,17,-25,]),'AND':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[18,-23,-20,-21,-22,-24,-19,-23,18,-7,-8,-9,-10,-11,18,-13,-14,-15,-16,-17,-18,18,-25,]),'OR':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[19,-23,-20,-21,-22,-24,-19,-23,19,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,19,-25,]),'EQ':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[20,-23,-20,-21,-22,-24,-19,-23,20,-7,-8,-9,-10,20,20,-13,-14,-15,-16,-17,-18,20,-25,]),'NE':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[21,-23,-20,-21,-22,-24,-19,-23,21,-7,-8,-9,-10,21,21,-13,-14,-15,-16,-17,-18,21,-25,]),'LT':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[22,-23,-20,-21,-22,-24,-19,-23,22,-7,-8,-9,-10,22,22,22,22,-15,-16,-17,-18,22,-25,]),'GT':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[23,-23,-20,-21,-22,-24,-19,-23,23,-7,-8,-9,-10,23,23,23,23,-15,-16,-17,-18,23,-25,]),'LE':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[24,-23,-20,-21,-22,-24,-19,-23,24,-7,-8,-9,-10,24,24,24,24,-15,-16,-17,-18,24,-25,]),'GE':([4,5,7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,],[25,-23,-20,-21,-22,-24,-19,-23,25,-7,-8,-9,-10,25,25,25,25,-15,-16,-17,-18,25,-25,]),'EQUALS':([5,],[26,]),'RPAREN':([7,8,9,10,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,43,],[-20,-21,-22,-24,-19,-23,43,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-25,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,2,],[1,10,]),'statement':([0,2,],[2,2,]),'assignment':([0,2,],[3,3,]),'expression':([0,2,9,12,13,14,15,16,],[4,4,17,19,20,21,22,23,]),'factor':([0,2,9,12,13,14,15,16,],[6,6,6,6,6,6,6,6,]),}
+_lr_goto_items = {'program':([0,2,],[1,12,]),'statement':([0,2,],[2,2,]),'assignment':([0,2,],[3,3,]),'expression':([0,2,6,11,14,15,16,17,18,19,20,21,22,23,24,25,26,],[4,4,27,29,30,31,32,33,34,35,36,37,38,39,40,41,42,]),'factor':([0,2,6,11,14,15,16,17,18,19,20,21,22,23,24,25,26,],[7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,19 +27,29 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> statement','program',1,'p_program','stringSupport.py',83),
-  ('program -> statement program','program',2,'p_program','stringSupport.py',84),
-  ('statement -> assignment','statement',1,'p_statement','stringSupport.py',91),
-  ('statement -> expression SEMICOLON','statement',2,'p_statement','stringSupport.py',92),
-  ('statement -> expression','statement',1,'p_statement','stringSupport.py',93),
-  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','stringSupport.py',97),
-  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','stringSupport.py',101),
-  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','stringSupport.py',102),
-  ('expression -> expression MUL expression','expression',3,'p_expression_binop','stringSupport.py',103),
-  ('expression -> expression DIV expression','expression',3,'p_expression_binop','stringSupport.py',104),
-  ('expression -> factor','expression',1,'p_expression_factor','stringSupport.py',108),
-  ('factor -> NUMBER','factor',1,'p_factor_number','stringSupport.py',112),
-  ('factor -> IDENTIFIER','factor',1,'p_factor_identifier','stringSupport.py',116),
-  ('factor -> STRING','factor',1,'p_factor_string','stringSupport.py',120),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','stringSupport.py',124),
+  ('program -> statement','program',1,'p_program','booleanSupport.py',90),
+  ('program -> statement program','program',2,'p_program','booleanSupport.py',91),
+  ('statement -> assignment','statement',1,'p_statement','booleanSupport.py',96),
+  ('statement -> expression SEMICOLON','statement',2,'p_statement','booleanSupport.py',97),
+  ('statement -> expression','statement',1,'p_statement','booleanSupport.py',98),
+  ('assignment -> IDENTIFIER EQUALS expression SEMICOLON','assignment',4,'p_assignment','booleanSupport.py',102),
+  ('expression -> expression PLUS expression','expression',3,'p_expression_binop','booleanSupport.py',106),
+  ('expression -> expression MINUS expression','expression',3,'p_expression_binop','booleanSupport.py',107),
+  ('expression -> expression MUL expression','expression',3,'p_expression_binop','booleanSupport.py',108),
+  ('expression -> expression DIV expression','expression',3,'p_expression_binop','booleanSupport.py',109),
+  ('expression -> expression AND expression','expression',3,'p_expression_binop','booleanSupport.py',110),
+  ('expression -> expression OR expression','expression',3,'p_expression_binop','booleanSupport.py',111),
+  ('expression -> expression EQ expression','expression',3,'p_expression_binop','booleanSupport.py',112),
+  ('expression -> expression NE expression','expression',3,'p_expression_binop','booleanSupport.py',113),
+  ('expression -> expression LT expression','expression',3,'p_expression_binop','booleanSupport.py',114),
+  ('expression -> expression GT expression','expression',3,'p_expression_binop','booleanSupport.py',115),
+  ('expression -> expression LE expression','expression',3,'p_expression_binop','booleanSupport.py',116),
+  ('expression -> expression GE expression','expression',3,'p_expression_binop','booleanSupport.py',117),
+  ('expression -> NOT expression','expression',2,'p_expression_unop','booleanSupport.py',121),
+  ('expression -> factor','expression',1,'p_expression_factor','booleanSupport.py',125),
+  ('factor -> BOOL','factor',1,'p_factor_bool','booleanSupport.py',129),
+  ('factor -> NUMBER','factor',1,'p_factor_number','booleanSupport.py',133),
+  ('factor -> IDENTIFIER','factor',1,'p_factor_identifier','booleanSupport.py',137),
+  ('factor -> STRING','factor',1,'p_factor_string','booleanSupport.py',141),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','booleanSupport.py',145),
 ]
