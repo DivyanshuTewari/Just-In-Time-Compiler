@@ -1,0 +1,537 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statement
+Rule 2     program -> statement program
+Rule 3     statement -> assignment
+Rule 4     statement -> expression SEMICOLON
+Rule 5     statement -> expression
+Rule 6     assignment -> IDENTIFIER EQUALS expression SEMICOLON
+Rule 7     expression -> expression PLUS expression
+Rule 8     expression -> expression MINUS expression
+Rule 9     expression -> expression MUL expression
+Rule 10    expression -> expression DIV expression
+Rule 11    expression -> factor
+Rule 12    factor -> NUMBER
+Rule 13    factor -> IDENTIFIER
+Rule 14    factor -> STRING
+Rule 15    factor -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+DIV                  : 10
+EQUALS               : 6
+IDENTIFIER           : 6 13
+LPAREN               : 15
+MINUS                : 8
+MUL                  : 9
+NUMBER               : 12
+PLUS                 : 7
+RPAREN               : 15
+SEMICOLON            : 4 6
+STRING               : 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 3
+expression           : 4 5 6 7 7 8 8 9 9 10 10 15
+factor               : 11
+program              : 2 0
+statement            : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . statement
+    (2) program -> . statement program
+    (3) statement -> . assignment
+    (4) statement -> . expression SEMICOLON
+    (5) statement -> . expression
+    (6) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    IDENTIFIER      shift and go to state 5
+    NUMBER          shift and go to state 7
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    program                        shift and go to state 1
+    statement                      shift and go to state 2
+    assignment                     shift and go to state 3
+    expression                     shift and go to state 4
+    factor                         shift and go to state 6
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> statement .
+    (2) program -> statement . program
+    (1) program -> . statement
+    (2) program -> . statement program
+    (3) statement -> . assignment
+    (4) statement -> . expression SEMICOLON
+    (5) statement -> . expression
+    (6) assignment -> . IDENTIFIER EQUALS expression SEMICOLON
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    $end            reduce using rule 1 (program -> statement .)
+    IDENTIFIER      shift and go to state 5
+    NUMBER          shift and go to state 7
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    statement                      shift and go to state 2
+    program                        shift and go to state 10
+    assignment                     shift and go to state 3
+    expression                     shift and go to state 4
+    factor                         shift and go to state 6
+
+state 3
+
+    (3) statement -> assignment .
+
+    IDENTIFIER      reduce using rule 3 (statement -> assignment .)
+    NUMBER          reduce using rule 3 (statement -> assignment .)
+    STRING          reduce using rule 3 (statement -> assignment .)
+    LPAREN          reduce using rule 3 (statement -> assignment .)
+    $end            reduce using rule 3 (statement -> assignment .)
+
+
+state 4
+
+    (4) statement -> expression . SEMICOLON
+    (5) statement -> expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       shift and go to state 11
+    IDENTIFIER      reduce using rule 5 (statement -> expression .)
+    NUMBER          reduce using rule 5 (statement -> expression .)
+    STRING          reduce using rule 5 (statement -> expression .)
+    LPAREN          reduce using rule 5 (statement -> expression .)
+    $end            reduce using rule 5 (statement -> expression .)
+    PLUS            shift and go to state 12
+    MINUS           shift and go to state 13
+    MUL             shift and go to state 14
+    DIV             shift and go to state 15
+
+
+state 5
+
+    (6) assignment -> IDENTIFIER . EQUALS expression SEMICOLON
+    (13) factor -> IDENTIFIER .
+
+    EQUALS          shift and go to state 16
+    SEMICOLON       reduce using rule 13 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 13 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 13 (factor -> IDENTIFIER .)
+    MUL             reduce using rule 13 (factor -> IDENTIFIER .)
+    DIV             reduce using rule 13 (factor -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 13 (factor -> IDENTIFIER .)
+    NUMBER          reduce using rule 13 (factor -> IDENTIFIER .)
+    STRING          reduce using rule 13 (factor -> IDENTIFIER .)
+    LPAREN          reduce using rule 13 (factor -> IDENTIFIER .)
+    $end            reduce using rule 13 (factor -> IDENTIFIER .)
+
+
+state 6
+
+    (11) expression -> factor .
+
+    SEMICOLON       reduce using rule 11 (expression -> factor .)
+    PLUS            reduce using rule 11 (expression -> factor .)
+    MINUS           reduce using rule 11 (expression -> factor .)
+    MUL             reduce using rule 11 (expression -> factor .)
+    DIV             reduce using rule 11 (expression -> factor .)
+    IDENTIFIER      reduce using rule 11 (expression -> factor .)
+    NUMBER          reduce using rule 11 (expression -> factor .)
+    STRING          reduce using rule 11 (expression -> factor .)
+    LPAREN          reduce using rule 11 (expression -> factor .)
+    $end            reduce using rule 11 (expression -> factor .)
+    RPAREN          reduce using rule 11 (expression -> factor .)
+
+
+state 7
+
+    (12) factor -> NUMBER .
+
+    SEMICOLON       reduce using rule 12 (factor -> NUMBER .)
+    PLUS            reduce using rule 12 (factor -> NUMBER .)
+    MINUS           reduce using rule 12 (factor -> NUMBER .)
+    MUL             reduce using rule 12 (factor -> NUMBER .)
+    DIV             reduce using rule 12 (factor -> NUMBER .)
+    IDENTIFIER      reduce using rule 12 (factor -> NUMBER .)
+    NUMBER          reduce using rule 12 (factor -> NUMBER .)
+    STRING          reduce using rule 12 (factor -> NUMBER .)
+    LPAREN          reduce using rule 12 (factor -> NUMBER .)
+    $end            reduce using rule 12 (factor -> NUMBER .)
+    RPAREN          reduce using rule 12 (factor -> NUMBER .)
+
+
+state 8
+
+    (14) factor -> STRING .
+
+    SEMICOLON       reduce using rule 14 (factor -> STRING .)
+    PLUS            reduce using rule 14 (factor -> STRING .)
+    MINUS           reduce using rule 14 (factor -> STRING .)
+    MUL             reduce using rule 14 (factor -> STRING .)
+    DIV             reduce using rule 14 (factor -> STRING .)
+    IDENTIFIER      reduce using rule 14 (factor -> STRING .)
+    NUMBER          reduce using rule 14 (factor -> STRING .)
+    STRING          reduce using rule 14 (factor -> STRING .)
+    LPAREN          reduce using rule 14 (factor -> STRING .)
+    $end            reduce using rule 14 (factor -> STRING .)
+    RPAREN          reduce using rule 14 (factor -> STRING .)
+
+
+state 9
+
+    (15) factor -> LPAREN . expression RPAREN
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 17
+    factor                         shift and go to state 6
+
+state 10
+
+    (2) program -> statement program .
+
+    $end            reduce using rule 2 (program -> statement program .)
+
+
+state 11
+
+    (4) statement -> expression SEMICOLON .
+
+    IDENTIFIER      reduce using rule 4 (statement -> expression SEMICOLON .)
+    NUMBER          reduce using rule 4 (statement -> expression SEMICOLON .)
+    STRING          reduce using rule 4 (statement -> expression SEMICOLON .)
+    LPAREN          reduce using rule 4 (statement -> expression SEMICOLON .)
+    $end            reduce using rule 4 (statement -> expression SEMICOLON .)
+
+
+state 12
+
+    (7) expression -> expression PLUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 19
+    factor                         shift and go to state 6
+
+state 13
+
+    (8) expression -> expression MINUS . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 20
+    factor                         shift and go to state 6
+
+state 14
+
+    (9) expression -> expression MUL . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 21
+    factor                         shift and go to state 6
+
+state 15
+
+    (10) expression -> expression DIV . expression
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 22
+    factor                         shift and go to state 6
+
+state 16
+
+    (6) assignment -> IDENTIFIER EQUALS . expression SEMICOLON
+    (7) expression -> . expression PLUS expression
+    (8) expression -> . expression MINUS expression
+    (9) expression -> . expression MUL expression
+    (10) expression -> . expression DIV expression
+    (11) expression -> . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . IDENTIFIER
+    (14) factor -> . STRING
+    (15) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 7
+    IDENTIFIER      shift and go to state 18
+    STRING          shift and go to state 8
+    LPAREN          shift and go to state 9
+
+    expression                     shift and go to state 23
+    factor                         shift and go to state 6
+
+state 17
+
+    (15) factor -> LPAREN expression . RPAREN
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    RPAREN          shift and go to state 24
+    PLUS            shift and go to state 12
+    MINUS           shift and go to state 13
+    MUL             shift and go to state 14
+    DIV             shift and go to state 15
+
+
+state 18
+
+    (13) factor -> IDENTIFIER .
+
+    RPAREN          reduce using rule 13 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 13 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 13 (factor -> IDENTIFIER .)
+    MUL             reduce using rule 13 (factor -> IDENTIFIER .)
+    DIV             reduce using rule 13 (factor -> IDENTIFIER .)
+    SEMICOLON       reduce using rule 13 (factor -> IDENTIFIER .)
+    IDENTIFIER      reduce using rule 13 (factor -> IDENTIFIER .)
+    NUMBER          reduce using rule 13 (factor -> IDENTIFIER .)
+    STRING          reduce using rule 13 (factor -> IDENTIFIER .)
+    LPAREN          reduce using rule 13 (factor -> IDENTIFIER .)
+    $end            reduce using rule 13 (factor -> IDENTIFIER .)
+
+
+state 19
+
+    (7) expression -> expression PLUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       reduce using rule 7 (expression -> expression PLUS expression .)
+    PLUS            reduce using rule 7 (expression -> expression PLUS expression .)
+    MINUS           reduce using rule 7 (expression -> expression PLUS expression .)
+    IDENTIFIER      reduce using rule 7 (expression -> expression PLUS expression .)
+    NUMBER          reduce using rule 7 (expression -> expression PLUS expression .)
+    STRING          reduce using rule 7 (expression -> expression PLUS expression .)
+    LPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
+    $end            reduce using rule 7 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 7 (expression -> expression PLUS expression .)
+    MUL             shift and go to state 14
+    DIV             shift and go to state 15
+
+  ! MUL             [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! DIV             [ reduce using rule 7 (expression -> expression PLUS expression .) ]
+  ! PLUS            [ shift and go to state 12 ]
+  ! MINUS           [ shift and go to state 13 ]
+
+
+state 20
+
+    (8) expression -> expression MINUS expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       reduce using rule 8 (expression -> expression MINUS expression .)
+    PLUS            reduce using rule 8 (expression -> expression MINUS expression .)
+    MINUS           reduce using rule 8 (expression -> expression MINUS expression .)
+    IDENTIFIER      reduce using rule 8 (expression -> expression MINUS expression .)
+    NUMBER          reduce using rule 8 (expression -> expression MINUS expression .)
+    STRING          reduce using rule 8 (expression -> expression MINUS expression .)
+    LPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
+    $end            reduce using rule 8 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 8 (expression -> expression MINUS expression .)
+    MUL             shift and go to state 14
+    DIV             shift and go to state 15
+
+  ! MUL             [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! DIV             [ reduce using rule 8 (expression -> expression MINUS expression .) ]
+  ! PLUS            [ shift and go to state 12 ]
+  ! MINUS           [ shift and go to state 13 ]
+
+
+state 21
+
+    (9) expression -> expression MUL expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       reduce using rule 9 (expression -> expression MUL expression .)
+    PLUS            reduce using rule 9 (expression -> expression MUL expression .)
+    MINUS           reduce using rule 9 (expression -> expression MUL expression .)
+    MUL             reduce using rule 9 (expression -> expression MUL expression .)
+    DIV             reduce using rule 9 (expression -> expression MUL expression .)
+    IDENTIFIER      reduce using rule 9 (expression -> expression MUL expression .)
+    NUMBER          reduce using rule 9 (expression -> expression MUL expression .)
+    STRING          reduce using rule 9 (expression -> expression MUL expression .)
+    LPAREN          reduce using rule 9 (expression -> expression MUL expression .)
+    $end            reduce using rule 9 (expression -> expression MUL expression .)
+    RPAREN          reduce using rule 9 (expression -> expression MUL expression .)
+
+  ! PLUS            [ shift and go to state 12 ]
+  ! MINUS           [ shift and go to state 13 ]
+  ! MUL             [ shift and go to state 14 ]
+  ! DIV             [ shift and go to state 15 ]
+
+
+state 22
+
+    (10) expression -> expression DIV expression .
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       reduce using rule 10 (expression -> expression DIV expression .)
+    PLUS            reduce using rule 10 (expression -> expression DIV expression .)
+    MINUS           reduce using rule 10 (expression -> expression DIV expression .)
+    MUL             reduce using rule 10 (expression -> expression DIV expression .)
+    DIV             reduce using rule 10 (expression -> expression DIV expression .)
+    IDENTIFIER      reduce using rule 10 (expression -> expression DIV expression .)
+    NUMBER          reduce using rule 10 (expression -> expression DIV expression .)
+    STRING          reduce using rule 10 (expression -> expression DIV expression .)
+    LPAREN          reduce using rule 10 (expression -> expression DIV expression .)
+    $end            reduce using rule 10 (expression -> expression DIV expression .)
+    RPAREN          reduce using rule 10 (expression -> expression DIV expression .)
+
+  ! PLUS            [ shift and go to state 12 ]
+  ! MINUS           [ shift and go to state 13 ]
+  ! MUL             [ shift and go to state 14 ]
+  ! DIV             [ shift and go to state 15 ]
+
+
+state 23
+
+    (6) assignment -> IDENTIFIER EQUALS expression . SEMICOLON
+    (7) expression -> expression . PLUS expression
+    (8) expression -> expression . MINUS expression
+    (9) expression -> expression . MUL expression
+    (10) expression -> expression . DIV expression
+
+    SEMICOLON       shift and go to state 25
+    PLUS            shift and go to state 12
+    MINUS           shift and go to state 13
+    MUL             shift and go to state 14
+    DIV             shift and go to state 15
+
+
+state 24
+
+    (15) factor -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    MUL             reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    DIV             reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    IDENTIFIER      reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    NUMBER          reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    STRING          reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 15 (factor -> LPAREN expression RPAREN .)
+
+
+state 25
+
+    (6) assignment -> IDENTIFIER EQUALS expression SEMICOLON .
+
+    IDENTIFIER      reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    NUMBER          reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    STRING          reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    LPAREN          reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+    $end            reduce using rule 6 (assignment -> IDENTIFIER EQUALS expression SEMICOLON .)
+
