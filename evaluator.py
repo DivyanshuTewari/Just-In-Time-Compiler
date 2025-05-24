@@ -8,7 +8,21 @@ def is_string_node(node, context):
     except:
         return False
 
-
+def eval_program(ast, context):
+    """Evaluate the entire program"""
+    result = None
+    context.setdefault('variables', {})
+    context.setdefault('string_vars', set())
+    
+    if isinstance(ast, list):
+        for node in ast:
+            if isinstance(node, tuple) and node[0] == 'assign':
+                _handle_assignment(node, context)
+            else:
+                result = _eval_node(node, context)
+    else:
+        result = _eval_node(ast, context)
+    return result
 
 def _handle_assignment(node, context):
     """Handle variable assignment"""
