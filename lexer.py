@@ -1,24 +1,6 @@
 import ply.lex as lex
 import re
 
-tokens = (
-    'NUMBER', 'IDENTIFIER', 'STRING', 'BOOL',
-    'PLUS', 'MINUS', 'MUL', 'DIV',
-    'AND', 'OR', 'NOT',
-    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE',
-    'IF', 'ELSE',
-    'LPAREN', 'RPAREN', 'EQUALS', 'SEMICOLON'
-)
-# reserver tokens defined here
-reserved = {
-    'if': 'IF',
-    'else': 'ELSE',
-    'true': 'BOOL',
-    'false': 'BOOL',
-    'TRUE': 'BOOL',
-    'FALSE': 'BOOL',
-}
-
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_MUL = r'\*'
@@ -37,6 +19,25 @@ t_RPAREN = r'\)'
 t_EQUALS = r'='
 t_SEMICOLON = r';'
 t_ignore = ' \t\n'
+
+tokens = (
+    'NUMBER', 'IDENTIFIER', 'STRING', 'BOOL',
+    'PLUS', 'MINUS', 'MUL', 'DIV',
+    'AND', 'OR', 'NOT',
+    'EQ', 'NE', 'LT', 'GT', 'LE', 'GE',
+    'IF', 'ELSE',
+    'LPAREN', 'RPAREN', 'EQUALS', 'SEMICOLON'
+)
+
+# reserver tokens defined here
+reserved = {
+    'if': 'IF',
+    'else': 'ELSE',
+    'true': 'BOOL',
+    'false': 'BOOL',
+    'TRUE': 'BOOL',
+    'FALSE': 'BOOL',
+}
 
 def t_STRING(t):
     r'"([^"\\]|\\.)*"'
