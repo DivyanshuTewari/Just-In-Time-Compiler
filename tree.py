@@ -34,3 +34,14 @@ class ASTBuilder(Transformer):
 
     def div(self, items):
         return BinaryOp(items[0], '/', items[1])
+
+
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+class BinaryOp:
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op
+        self.right = right
