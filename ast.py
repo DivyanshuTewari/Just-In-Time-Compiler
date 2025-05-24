@@ -34,7 +34,22 @@ def run_jit(module):
     return cfunc()
 
 
-
+def codegen(self, node):
+        if isinstance(node, Number):
+            return ir.Constant(ir.DoubleType(), node.value)
+        elif isinstance(node, BinaryOp):
+            left = self.codegen(node.left)
+            right = self.codegen(node.right)
+            if node.op == '+':
+                return self.builder.fadd(left, right, name="addtmp")
+            elif node.op == '-':
+                return self.builder.fsub(left, right, name="subtmp")
+            elif node.op == '*':
+                return self.builder.fmul(left, right, name="multmp")
+            elif node.op == '/':
+                return self.builder.fdiv(left, right, name="divtmp")
+            else:
+                raise ValueError(f"Unknown binary operator {node.op}")
 
 def compile_expr(expr):
     if isinstance(expr, Number):
