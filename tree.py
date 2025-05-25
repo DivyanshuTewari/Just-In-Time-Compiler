@@ -1,9 +1,41 @@
 from lark import Lark, Transformer
 
+
+from lark import Lark, Transformer
+
+grammar = """
+?start: stmt+
+
+?stmt: "let" NAME "=" expr    -> assign
+     | expr                   -> expr_stmt
+
+?expr: term
+     | expr "+" term          -> add
+     | expr "-" term          -> sub
+
+?term: factor
+     | term "*" factor        -> mul
+     | term "/" factor        -> div
+
+?factor: NUMBER               -> number
+       | NAME                 -> var
+       | "(" expr ")"
+
+%import common.CNAME -> NAME
+%import common.NUMBER
+%import common.WS_INLINE
+%ignore WS_INLINE
+"""
+
+parser = Lark(grammar, parser='lalr')
+
+
 grammar = """
 ?expr: term
      | expr "+" term   -> add
      | expr "-" term   -> sub
+
+     
 
 ?term: factor
      | term "*" factor -> mul
