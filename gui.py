@@ -288,6 +288,8 @@ def eval_string_node(node, context):
 # --------------------------
 # Code Generation (AST → x86_64 Assembly)
 # --------------------------
+
+
 _label_counter = [0]
 def new_label():
     _label_counter[0] += 1
