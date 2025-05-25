@@ -13,9 +13,9 @@ from ctypes import string_at
 tokens = (
     'NUMBER', 'IDENTIFIER', 'STRING', 'BOOL',
     'PLUS', 'MINUS', 'MUL', 'DIV',
+    'IF', 'ELSE',
     'AND', 'OR', 'NOT',
     'EQ', 'NE', 'LT', 'GT', 'LE', 'GE',
-    'IF', 'ELSE',
     'LPAREN', 'RPAREN', 'EQUALS', 'SEMICOLON'
 )
 
