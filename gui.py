@@ -930,6 +930,8 @@ class JITCompilerGUI:
         txt.config(state=tk.DISABLED)
         win.geometry("600x400")
 
+        # status bar 
+
     def status(self, msg):
         self.statusbar.config(text=msg)
 
