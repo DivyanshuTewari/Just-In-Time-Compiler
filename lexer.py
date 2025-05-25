@@ -9,7 +9,7 @@ tokens = (
     'IF', 'ELSE',
     'LPAREN', 'RPAREN', 'EQUALS', 'SEMICOLON'
 )
-
+# reserver tokens defined here
 reserved = {
     'if': 'IF',
     'else': 'ELSE',
