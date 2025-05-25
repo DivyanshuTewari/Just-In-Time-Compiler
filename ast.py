@@ -28,3 +28,53 @@ def run_jit(module):
 
     engine.finalize_object()
     func_ptr = engine.get_function_address("main")
+
+
+
+from llvmlite import ir, binding
+
+class CodeGen:
+    def __init__(self):
+        self.module = ir.Module(name="jit_module")
+        self.builder = None
+        self.func = None
+        self.variables = {}
+
+    def compile(self, stmts):
+        func_type = ir.FunctionType(ir.DoubleType(), [])
+        self.func = ir.Function(self.module, func_type, name="main")
+        block = self.func.append_basic_block(name="entry")
+        self.builder = ir.IRBuilder(block)
+
+        result = None
+        for stmt in stmts:
+            result = self.codegen(stmt)
+
+        self.builder.ret(result if result else ir.Constant(ir.DoubleType(), 0.0))
+
+    def codegen(self, node):
+        if isinstance(node, Number):
+            return ir.Constant(ir.DoubleType(), node.value)
+        elif isinstance(node, Variable):
+            if node.name not in self.variables:
+                raise NameError(f"Undefined variable '{node.name}'")
+            return self.builder.load(self.variables[node.name], name=node.name)
+        elif isinstance(node, Assignment):
+            val = self.codegen(node.value)
+            ptr = self.builder.alloca(ir.DoubleType(), name=node.name)
+            self.builder.store(val, ptr)
+            self.variables[node.name] = ptr
+        elif isinstance(node, ExpressionStmt):
+            return self.codegen(node.expr)
+        elif isinstance(node, BinaryOp):
+            l = self.codegen(node.left)
+            r = self.codegen(node.right)
+            ops = {
+                '+': self.builder.fadd,
+                '-': self.builder.fsub,
+                '*': self.builder.fmul,
+                '/': self.builder.fdiv
+            }
+            return ops[node.op](l, r)
+        else:
+            raise TypeError(f"Unknown AST node: {type(node)}")
