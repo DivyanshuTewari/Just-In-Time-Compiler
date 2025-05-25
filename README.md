@@ -16,6 +16,35 @@
 
 ![image](https://github.com/user-attachments/assets/3df670d5-8246-4c67-802e-8badb5783f25)
 
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> statement
+Rule 2     program -> statement program
+Rule 3     statement -> assignment
+Rule 4     statement -> expression SEMICOLON
+Rule 5     statement -> expression
+Rule 6     assignment -> IDENTIFIER EQUALS expression SEMICOLON
+Rule 7     expression -> IF LPAREN expression RPAREN expression ELSE expression
+Rule 8     expression -> expression PLUS expression
+Rule 9     expression -> expression MINUS expression
+Rule 10    expression -> expression MUL expression
+Rule 11    expression -> expression DIV expression
+Rule 12    expression -> expression AND expression
+Rule 13    expression -> expression OR expression
+Rule 14    expression -> expression EQ expression
+Rule 15    expression -> expression NE expression
+Rule 16    expression -> expression LT expression
+Rule 17    expression -> expression GT expression
+Rule 18    expression -> expression LE expression
+Rule 19    expression -> expression GE expression
+Rule 20    expression -> NOT expression
+Rule 21    expression -> factor
+Rule 22    factor -> BOOL
+Rule 23    factor -> NUMBER
+Rule 24    factor -> IDENTIFIER
+Rule 25    factor -> STRING
+Rule 26    factor -> LPAREN expression RPAREN
 
 
 ## 📦 Project Structure
