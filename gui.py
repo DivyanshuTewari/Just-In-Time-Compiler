@@ -1,12 +1,15 @@
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
 import re
 import ply.lex as lex
 import ply.yacc as yacc
 import struct
 import ctypes
+from ctypes import string_at
 
 # --------------------------
 # Lexer (Tokenization)
-# --------------------------
+# --------------------------+
 tokens = (
     'NUMBER', 'IDENTIFIER', 'STRING', 'BOOL',
     'PLUS', 'MINUS', 'MUL', 'DIV',
@@ -198,13 +201,78 @@ def is_string_node(node, context):
     if isinstance(node, IfElse):
         return is_string_node(node.then_expr, context) and is_string_node(node.else_expr, context)
     return False
+def eval_program(ast, context):
+    result = None
+    if isinstance(ast, list):
+        for node in ast:
+            if isinstance(node, tuple) and node[0] == 'assign':
+                varname = node[1]
+                value_node = node[2]
+                try:
+                    value = eval_numeric_node(value_node, context)
+                    context['variables'][varname] = ('number', value)
+                except Exception:
+                    value = eval_string_node(value_node, context)
+                    context['variables'][varname] = ('string', value)
+            else:
+                try:
+                    result = eval_numeric_node(node, context)
+                except Exception:
+                    result = eval_string_node(node, context)
+    else:
+        try:
+            result = eval_numeric_node(ast, context)
+        except Exception:
+            result = eval_string_node(ast, context)
+    return result
+
+def eval_numeric_node(node, context):
+    if isinstance(node, Number):
+        return node.value
+    elif isinstance(node, Bool):
+        return int(node.value)
+    elif isinstance(node, Identifier):
+        if node.name not in context['variables']:
+            raise RuntimeError(f"Undefined variable '{node.name}'")
+        var_type, var_value = context['variables'][node.name]
+        if var_type != 'number':
+            raise RuntimeError(f"Variable '{node.name}' is not a number")
+        return var_value
+    elif isinstance(node, BinOp):
+        left = eval_numeric_node(node.left, context)
+        right = eval_numeric_node(node.right, context)
+        if node.op == '+': return left + right
+        if node.op == '-': return left - right
+        if node.op == '*': return left * right
+        if node.op == '/': return left // right
+        if node.op == '&&': return int(bool(left) and bool(right))
+        if node.op == '||': return int(bool(left) or bool(right))
+        if node.op == '==': return int(left == right)
+        if node.op == '!=': return int(left != right)
+        if node.op == '<': return int(left < right)
+        if node.op == '>': return int(left > right)
+        if node.op == '<=': return int(left <= right)
+        if node.op == '>=': return int(left >= right)
+    elif isinstance(node, UnOp):
+        if node.op == '-':
+            return -eval_numeric_node(node.val, context)
+        if node.op == '!':
+            return int(not eval_numeric_node(node.val, context))
+    elif isinstance(node, IfElse):
+        cond = eval_numeric_node(node.cond, context)
+        return eval_numeric_node(node.then_expr if cond else node.else_expr, context)
+    raise RuntimeError("Not a numeric node")
 
 def eval_string_node(node, context):
     if isinstance(node, String):
         return node.value
     elif isinstance(node, Identifier):
-        addr = context['variables'][node.name]
-        return ctypes.string_at(addr)
+        if node.name not in context['variables']:
+            raise RuntimeError(f"Undefined variable '{node.name}'")
+        var_type, var_value = context['variables'][node.name]
+        if var_type != 'string':
+            raise RuntimeError(f"Variable '{node.name}' is not a string")
+        return var_value
     elif isinstance(node, BinOp) and node.op == '+':
         left = eval_string_node(node.left, context)
         right = eval_string_node(node.right, context)
@@ -216,39 +284,6 @@ def eval_string_node(node, context):
         return eval_string_node(node.then_expr if cond else node.else_expr, context)
     else:
         raise RuntimeError("Not a string node")
-
-def eval_numeric_node(node, context):
-    # Used for if-else string/number selection
-    if isinstance(node, Number):
-        return node.value
-    elif isinstance(node, Bool):
-        return int(node.value)
-    elif isinstance(node, Identifier):
-        addr = context['variables'][node.name]
-        return ctypes.c_int64.from_address(addr).value
-    elif isinstance(node, BinOp):
-        # Only for simple numeric/boolean cases
-        left = eval_numeric_node(node.left, context)
-        right = eval_numeric_node(node.right, context)
-        if node.op == '+': return left + right
-        if node.op == '-': return left - right
-        if node.op == '*': return left * right
-        if node.op == '/': return left // right
-        if node.op in ('&&', 'AND'): return int(bool(left) and bool(right))
-        if node.op in ('||', 'OR'): return int(bool(left) or bool(right))
-        if node.op in ('==', 'EQ'): return int(left == right)
-        if node.op in ('!=', 'NE'): return int(left != right)
-        if node.op in ('<', 'LT'): return int(left < right)
-        if node.op in ('>', 'GT'): return int(left > right)
-        if node.op in ('<=', 'LE'): return int(left <= right)
-        if node.op in ('>=', 'GE'): return int(left >= right)
-    elif isinstance(node, UnOp):
-        if node.op == '!':
-            return int(not eval_numeric_node(node.val, context))
-    elif isinstance(node, IfElse):
-        cond = eval_numeric_node(node.cond, context)
-        return eval_numeric_node(node.then_expr if cond else node.else_expr, context)
-    raise RuntimeError("Not a numeric node")
 
 # --------------------------
 # Code Generation (AST → x86_64 Assembly)
@@ -415,6 +450,12 @@ def compile_ast(node, context, reg='rax'):
             context['string_vars'].add(var_name)
         else:
             code += compile_ast(value, context, 'rax')
+            if var_name not in context['variables']:
+                context['stack_offset'] += 8
+                context['variables'][var_name] = context['stack_offset']
+            offset = context['variables'][var_name]
+            code.append(f"mov [rbp - {offset}], rax")
+
             addr = context['var_offsets'][var_name]
             code.append(f"mov [rbp - {addr}], rax")
             context['variables'][var_name] = addr
@@ -657,121 +698,246 @@ def jit_compile(expression, variables=None, debug=False):
     func_type = ctypes.CFUNCTYPE(ctypes.c_uint64)
     return func_type(ctypes.addressof(buf))
 
-# --------------------------
-# Test Cases
-# --------------------------
+# --- Import your backend code ---
+# (Paste your gui.py code above this line or in the same file)
+
+# For demonstration, we will use your parser and codegen as black-boxes.
+# We'll use eval_numeric_node and eval_string_node for "Run" button output.
+
+# --- Syntax Highlighting Patterns ---
+SYNTAX_PATTERNS = [
+    (r'\b(if|else|true|false)\b', 'keyword'),
+    (r'\b\d+\b', 'number'),
+    (r'"[^"]*"', 'string'),
+    (r'\b[a-zA-Z_][a-zA-Z0-9_]*\b', 'identifier'),
+]
+
+# --- Example Expressions ---
+EXAMPLES = [
+    ("Simple Math", "1 + 2 * 3"),
+    ("If/Else", "if (1 < 2) 42 else 0"),
+    ("Boolean", "true && false"),
+    ("String", '"Hello, " + "World!"'),
+    ("Assignment", "x = 5; x * 2"),
+    ("String Variable", 's = "Python"; s + " rocks!"'),
+    ("Complex Math", "8*3*6*4*7-1-2-4+4+6*24*213*54"),
+    ("Boolean Logic", "a = true; b = false; a && b"),
+]
+
+class JITCompilerGUI:
+    def __init__(self, root):
+        self.root = root
+        root.title("JIT Compiler Playground")
+        root.geometry("900x600")
+
+        self.create_widgets()
+        self.create_tags()
+        self.status("Ready.")
+
+    def create_widgets(self):
+        # --- Editor Frame ---
+        editor_frame = tk.Frame(self.root)
+        editor_frame.pack(fill=tk.BOTH, expand=True, padx=8, pady=8)
+
+        # --- Editor ---
+        self.editor = tk.Text(editor_frame, wrap=tk.WORD, font=("Consolas", 13), height=15, undo=True)
+        self.editor.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.editor.bind("<KeyRelease>", self.on_key_release)
+
+        # --- Scrollbar ---
+        scrollbar = tk.Scrollbar(editor_frame, command=self.editor.yview)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.editor.config(yscrollcommand=scrollbar.set)
+
+        # --- Example List ---
+        ex_frame = tk.Frame(self.root)
+        ex_frame.pack(fill=tk.X, padx=8)
+        tk.Label(ex_frame, text="Examples:").pack(side=tk.LEFT)
+        self.example_combo = ttk.Combobox(ex_frame, values=[desc for desc, code in EXAMPLES], state="readonly")
+        self.example_combo.pack(side=tk.LEFT, padx=5)
+        self.example_combo.bind("<<ComboboxSelected>>", self.load_example)
+
+        # --- Buttons ---
+        btn_frame = tk.Frame(self.root)
+        btn_frame.pack(fill=tk.X, padx=8, pady=4)
+        tk.Button(btn_frame, text="Run", command=self.run).pack(side=tk.LEFT, padx=2)
+        tk.Button(btn_frame, text="Clear", command=self.clear).pack(side=tk.LEFT, padx=2)
+        tk.Button(btn_frame, text="Save Code", command=self.save_code).pack(side=tk.LEFT, padx=2)
+        tk.Button(btn_frame, text="Load Code", command=self.load_code).pack(side=tk.LEFT, padx=2)
+        
+
+        # --- Output Area ---
+        output_frame = tk.LabelFrame(self.root, text="Output")
+        output_frame.pack(fill=tk.BOTH, expand=True, padx=8, pady=4)
+        self.output = tk.Text(output_frame, height=8, font=("Consolas", 12), bg="#f7f7f7", state=tk.DISABLED)
+        self.output.pack(fill=tk.BOTH, expand=True)
+
+        # --- Status Bar ---
+        self.statusbar = tk.Label(self.root, text="", anchor=tk.W, relief=tk.SUNKEN)
+        self.statusbar.pack(fill=tk.X, side=tk.BOTTOM)
+
+    def create_tags(self):
+        # Syntax highlighting tags
+        self.editor.tag_configure('keyword', foreground='#0057b7', font=("Consolas", 13, "bold"))
+        self.editor.tag_configure('number', foreground='#d35400')
+        self.editor.tag_configure('string', foreground='#27ae60')
+        self.editor.tag_configure('identifier', foreground='#34495e')
+
+    def on_key_release(self, event=None):
+        self.highlight_syntax()
+
+    def highlight_syntax(self):
+        code = self.editor.get("1.0", tk.END)
+        for tag in ['keyword', 'number', 'string', 'identifier']:
+            self.editor.tag_remove(tag, "1.0", tk.END)
+        for pattern, tag in SYNTAX_PATTERNS:
+            for match in re.finditer(pattern, code):
+                start = f"1.0+{match.start()}c"
+                end = f"1.0+{match.end()}c"
+                self.editor.tag_add(tag, start, end)
+
+    def load_example(self, event=None):
+        idx = self.example_combo.current()
+        if idx >= 0:
+            code = EXAMPLES[idx][1]
+            self.editor.delete("1.0", tk.END)
+            self.editor.insert(tk.END, code)
+            self.highlight_syntax()
+            self.status(f"Loaded example: {EXAMPLES[idx][0]}")
+
+    def run(self):
+        code = self.editor.get("1.0", tk.END).strip()
+        self.status("Running...")
+        self.output.config(state=tk.NORMAL)
+        self.output.delete("1.0", tk.END)
+        try:
+            # Run using your backend
+            ast = parser.parse(code)
+            context = {
+                'variables': {},
+                'string_vars': set(),
+                'string_buffer_offsets': {},
+                'stack_offset': 0,
+                'concat_buffers': [],
+                'var_offsets': {}
+            }
+            # Preprocess all string literals for buffer allocation
+            def collect_strings(node):
+                if isinstance(node, String):
+                    if node.value not in context['string_buffer_offsets']:
+                        addr = allocate_static_string(node.value)
+                        context['string_buffer_offsets'][node.value] = addr
+                elif isinstance(node, BinOp):
+                    collect_strings(node.left)
+                    collect_strings(node.right)
+                elif isinstance(node, UnOp):
+                    collect_strings(node.val)
+                elif isinstance(node, IfElse):
+                    collect_strings(node.cond)
+                    collect_strings(node.then_expr)
+                    collect_strings(node.else_expr)
+                elif isinstance(node, list):
+                    for n in node:
+                        collect_strings(n)
+                elif isinstance(node, tuple) and node[0] == 'assign':
+                    collect_strings(node[2])
+            collect_strings(ast)
+
+            # Evaluate last expression in the program
+            result = None
+            result = eval_program(ast, context)
+            if isinstance(result, bytes):
+                result = result.decode('utf-8').rstrip('\x00')
+
+            self.output.insert(tk.END, f"Result:\n{result}")
+            self.status("Execution successful.")
+        except Exception as e:
+            self.output.insert(tk.END, "Error:\n" + str(e))
+            self.status("Error occurred.")
+        self.output.config(state=tk.DISABLED)
+
+    def clear(self):
+        self.editor.delete("1.0", tk.END)
+        self.output.config(state=tk.NORMAL)
+        self.output.delete("1.0", tk.END)
+        self.output.config(state=tk.DISABLED)
+        self.status("Cleared.")
+
+    def save_code(self):
+        code = self.editor.get("1.0", tk.END)
+        filename = filedialog.asksaveasfilename(defaultextension=".jit", filetypes=[("JIT Code", "*.jit"), ("All files", "*.*")])
+        if filename:
+            with open(filename, "w") as f:
+                f.write(code)
+            self.status(f"Saved to {filename}")
+
+    def load_code(self):
+        filename = filedialog.askopenfilename(filetypes=[("JIT Code", "*.jit"), ("All files", "*.*")])
+        if filename:
+            with open(filename, "r") as f:
+                code = f.read()
+            self.editor.delete("1.0", tk.END)
+            self.editor.insert(tk.END, code)
+            self.highlight_syntax()
+            self.status(f"Loaded from {filename}")
+
+    def show_assembly(self):
+        code = self.editor.get("1.0", tk.END).strip()
+        try:
+            ast = parser.parse(code)
+            context = {
+                'variables': {},
+                'string_vars': set(),
+                'string_buffer_offsets': {},
+                'stack_offset': 0,
+                'concat_buffers': [],
+                'var_offsets': {}
+            }
+            # Preprocess all string literals for buffer allocation
+            def collect_strings(node):
+                if isinstance(node, String):
+                    if node.value not in context['string_buffer_offsets']:
+                        addr = allocate_static_string(node.value)
+                        context['string_buffer_offsets'][node.value] = addr
+                elif isinstance(node, BinOp):
+                    collect_strings(node.left)
+                    collect_strings(node.right)
+                elif isinstance(node, UnOp):
+                    collect_strings(node.val)
+                elif isinstance(node, IfElse):
+                    collect_strings(node.cond)
+                    collect_strings(node.then_expr)
+                    collect_strings(node.else_expr)
+                elif isinstance(node, list):
+                    for n in node:
+                        collect_strings(n)
+                elif isinstance(node, tuple) and node[0] == 'assign':
+                    collect_strings(node[2])
+            collect_strings(ast)
+            asm = []
+            if isinstance(ast, list):
+                for node in ast:
+                    asm += compile_ast(node, context)
+            else:
+                asm = compile_ast(ast, context)
+            asm_text = "\n".join(asm)
+            self.show_popup("Generated Assembly", asm_text)
+        except Exception as e:
+            self.show_popup("Assembly Error", str(e))
+
+    def show_popup(self, title, content):
+        win = tk.Toplevel(self.root)
+        win.title(title)
+        txt = tk.Text(win, wrap=tk.NONE, font=("Consolas", 12))
+        txt.insert(tk.END, content)
+        txt.pack(fill=tk.BOTH, expand=True)
+        txt.config(state=tk.DISABLED)
+        win.geometry("600x400")
+
+    def status(self, msg):
+        self.statusbar.config(text=msg)
+
 if __name__ == "__main__":
-    from ctypes import string_at
-
-    expr = '"Hello, " + "World!"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = 'a="foo"; b="bar"; a+b'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = '"abc" + "def" + "ghi"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = 's="Python "; s+"rocks!"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = "8*3*6*4*7-1-2-4+4+6*24*213*54"
-    func = jit_compile(expr)
-    result = func()
-    print(f"{expr} = {result}")
-
-    expr = "(2+3)*5"
-    func = jit_compile(expr)
-    print(f"{expr} = {func()}")
-
-    expr = "(10-2)/4"
-    func = jit_compile(expr)
-    print(f"{expr} = {func()}")
-
-    expr = "a=5; b=3; a*b + 2"
-    func = jit_compile(expr)
-    print(f"{expr} = {func()}")
-
-    expr = 's="Hello, World!"; s'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = '"Test string literal"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    # Boolean tests
-    print("Boolean tests:")
-    expr = "true"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "false"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "1 < 2"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "3 > 5"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=true; b=false; a && b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=true; b=false; a || b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "!(1 == 2)"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=5; b=3; a == b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=5; b=5; a == b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=5; b=3; a != b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    expr = "a=5; b=5; a != b"
-    func = jit_compile(expr)
-    print(f"{expr} = {bool(func())}")
-
-    # if-else tests
-    print("If-else tests:")
-    expr = 'if (1 < 2) 42 else 99'
-    func = jit_compile(expr)
-    print(f"{expr} = {func()}")
-
-    expr = 'if (false) "no" else "yes"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = 'if (5 > 3) "big" else "small"'
-    func = jit_compile(expr)
-    addr = func()
-    print(f'{expr} = {string_at(addr).decode()}')
-
-    expr = 'a=5; b=10; if (a < b) 123 else 456'
-    func = jit_compile(expr)
-    print(f"{expr} = {func()}")
+    root = tk.Tk()
+    app = JITCompilerGUI(root)
+    root.mainloop()

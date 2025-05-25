@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIT Compiler Flowchart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between boxes */
+            background-color: #ffffff; /* White background for the flowchart area */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            max-width: 90%;
+            overflow-x: auto; /* Allow horizontal scrolling on small screens */
+        }
+        .flowchart-box {
+            background-color: #e0f2fe; /* Lighter blue for boxes */
+            border: 2px solid #90cdf4; /* Blue border */
+            border-radius: 10px;
+            padding: 15px 25px;
+            text-align: center;
+            font-weight: 600;
+            color: #2c5282; /* Darker blue text */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle box shadow */
+            min-width: 250px; /* Ensure boxes are wide enough */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .flowchart-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #63b3ed; /* Blue arrow */
+            margin: 5px 0; /* Space for arrows */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .flowchart-box {
+                min-width: 200px;
+                padding: 12px 20px;
+                font-size: 0.9em;
+            }
+            .flowchart-container {
+                padding: 20px;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flowchart-box {
+                min-width: 180px;
+                padding: 10px 15px;
+                font-size: 0.8em;
+            }
+            .flowchart-container {
+                padding: 15px;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flowchart-container">
+        <div class="flowchart-box">
+            User Input<br>(Source Code)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Lexical Analysis<br>(lexer.py)<br>(Raw text → Tokens)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Syntactic Analysis<br>(parser.py)<br>(Tokens → AST)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Abstract Syntax Tree (AST)<br>(ast_nodes.py)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Evaluation<br>(evaluator.py)<br>(Interprets AST)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Code Generation<br>(codegen.py)<br>(AST → Assembly)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Assembly & Execution<br>(codegen.py)<br>(Assembly → Machine Code)
+        </div>
+        <div class="arrow"></div>
+
+        <div class="flowchart-box">
+            Output<br>(gui.py)<br>(Display Results)
+        </div>
+    </div>
+</body>
+</html>
