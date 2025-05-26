@@ -7,6 +7,17 @@ function = ir.Function(module, func_type, name="main")
 block = function.append_basic_block(name="entry")
 builder = ir.IRBuilder(block)
 
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+class BinaryOp:
+    def __init__(self, op, left, right):
+        self.op = op  # '+', '-', '*', '/'
+        self.left = left
+        self.right = right
+
+
 def compile_expr(expr):
     if isinstance(expr, Number):
         return ir.Constant(ir.DoubleType(), expr.value)
