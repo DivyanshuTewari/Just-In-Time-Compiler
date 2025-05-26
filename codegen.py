@@ -421,7 +421,7 @@ def jit_compile(expression, variables=None, debug=False):
             addr = context['variables'][var]
             assembly.append(f"mov rax, [rbp - {addr}]")
 
-    assembly.append("mov rsp, rbp")
+    assembly.append("mov rsp, rbp")//appending mov rsp and rbp
     assembly.append("pop rbp")
     assembly.append("ret")
 
