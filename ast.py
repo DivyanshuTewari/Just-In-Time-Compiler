@@ -33,14 +33,7 @@ def run_jit(module):
     cfunc = ctypes.CFUNCTYPE(ctypes.c_double)(func_ptr)
     return cfunc()
 
-cg = CodeGen()
-cg.compile(ast)
 
-print("Generated LLVM IR:")
-print(cg.module)
-
-result = run_jit(cg.module)
-print("JIT Result:", result)
 
 
 def compile_expr(expr):
@@ -67,9 +60,6 @@ def compile_expr(expr):
 def run_jit(ast_root):
     retval = compile_expr(ast_root)
     builder.ret(retval)
-
-    # Print LLVM IR (for debugging)
-    print(module)
 
     # Compile and run
     binding.initialize()
