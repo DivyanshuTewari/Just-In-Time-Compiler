@@ -95,24 +95,3 @@ def eval_numeric_node(node, context):
         return eval_numeric_node(node.then_expr if cond else node.else_expr, context)
     raise RuntimeError("Not a numeric node")
 
-def eval_string_node(node, context):
-    """Evaluate a string expression"""
-    if isinstance(node, String):
-        return node.value
-    elif isinstance(node, Identifier):
-        if node.name not in context['variables']:
-            raise RuntimeError(f"Undefined variable '{node.name}'")
-        var_type, var_value = context['variables'][node.name]
-        if var_type != 'string':
-            raise RuntimeError(f"Variable '{node.name}' is not a string")
-        return var_value
-    elif isinstance(node, BinOp) and node.op == '+':
-        left = eval_string_node(node.left, context)
-        right = eval_string_node(node.right, context)
-        if left.endswith(b'\x00'):
-            left = left[:-1]
-        return left + right
-    elif isinstance(node, IfElse):
-        cond = eval_numeric_node(node.cond, context)
-        return eval_string_node(node.then_expr if cond else node.else_expr, context)
-    raise RuntimeError("Not a string node")
