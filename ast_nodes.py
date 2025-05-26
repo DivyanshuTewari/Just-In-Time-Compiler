@@ -15,3 +15,8 @@ class UnOp:
     def __init__(self, op, val): 
         self.op = op
         self.val = val
+        class IfElse:
+    def __init__(self, cond, then_expr, else_expr):
+        self.cond = cond
+        self.then_expr = then_expr
+        self.else_expr = else_expr
