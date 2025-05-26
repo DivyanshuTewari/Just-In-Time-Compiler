@@ -82,8 +82,7 @@ class CodeGen:
     def compile(self, ast):
         func_type = ir.FunctionType(ir.DoubleType(), [])
         self.func = ir.Function(self.module, func_type, name="main")
-        block = self.func.append_basic_block(name="entry")
-        self.builder = ir.IRBuilder(block)
+      
         result = self.codegen(ast)
         self.builder.ret(result)
 
@@ -93,7 +92,7 @@ class CodeGen:
         elif isinstance(node, BinaryOp):
             l = self.codegen(node.left)
             r = self.codegen(node.right)
-            if node.op == '+': return self.builder.fadd(l, r)
+           
             if node.op == '-': return self.builder.fsub(l, r)
             if node.op == '*': return self.builder.fmul(l, r)
             if node.op == '/': return self.builder.fdiv(l, r)
@@ -126,22 +125,14 @@ class CodeGen:
 def run_jit(module):
     binding.initialize()
     binding.initialize_native_target()
-    binding.initialize_native_asmprinter()
 
     target = binding.Target.from_default_triple()
     tm = target.create_target_machine()
-    backing_mod = binding.parse_assembly(str(module))
-    engine = binding.create_mcjit_compiler(backing_mod, tm)
     engine.finalize_object()
 
     func_ptr = engine.get_function_address("main")
     import ctypes
     return ctypes.CFUNCTYPE(ctypes.c_double)(func_ptr)()
-
-
-
-
-
 
 
 
@@ -155,4 +146,4 @@ cg = CodeGen()
 cg.compile(ast)
 print("LLVM IR:")
 print(cg.module)
-print("JIT Result:", run_jit(cg.module))
+
