@@ -698,13 +698,7 @@ def jit_compile(expression, variables=None, debug=False):
     func_type = ctypes.CFUNCTYPE(ctypes.c_uint64)
     return func_type(ctypes.addressof(buf))
 
-# --- Import your backend code ---
-# (Paste your gui.py code above this line or in the same file)
 
-# For demonstration, we will use your parser and codegen as black-boxes.
-# We'll use eval_numeric_node and eval_string_node for "Run" button output.
-
-# --- Syntax Highlighting Patterns ---
 SYNTAX_PATTERNS = [
     (r'\b(if|else|true|false)\b', 'keyword'),
     (r'\b\d+\b', 'number'),
