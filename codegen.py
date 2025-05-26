@@ -395,5 +395,46 @@ def jit_compile(expression, variables=None, debug=False):
     assembly.append("push rbp")
     assembly.append("mov rbp, rsp")
     assembly.append(f"sub rsp, {offset}")
+       for stmt in ast_list:
+        assembly += compile_ast(stmt, context)
+
+    last = ast_list[-1]
+    if isinstance(last, (Number, BinOp, Bool, UnOp, IfElse)):
+        assembly += compile_ast(last, context, 'rax')
+    elif isinstance(last, String):
+        addr = context['string_buffer_offsets'][last.value]
+        assembly.append(f"mov rax, {addr}")
+    elif isinstance(last, Identifier):
+        var = last.name
+        if var in context['string_vars']:
+            addr = context['variables'][var]
+            assembly.append(f"mov rax, {addr}")
+        else:
+            addr = context['variables'][var]
+            assembly.append(f"mov rax, [rbp - {addr}]")
+    elif isinstance(last, tuple) and last[0] == 'assign':
+        var = last[1]
+        if var in context['string_vars']:
+            addr = context['variables'][var]
+            assembly.append(f"mov rax, {addr}")
+        else:
+            addr = context['variables'][var]
+            assembly.append(f"mov rax, [rbp - {addr}]")
+
+    assembly.append("mov rsp, rbp")
+    assembly.append("pop rbp")
+    assembly.append("ret")
+
+    machine_code = assemble(assembly)
+    buf = ctypes.create_string_buffer(machine_code)
+    old_protect = ctypes.c_ulong()
+    ctypes.windll.kernel32.VirtualProtect(
+        ctypes.cast(buf, ctypes.c_void_p),
+        len(machine_code),
+        0x40,
+        ctypes.byref(old_protect)
+    )
+    func_type = ctypes.CFUNCTYPE(ctypes.c_uint64)
+    return func_type(ctypes.addressof(buf))
 
  
