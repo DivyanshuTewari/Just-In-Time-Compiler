@@ -137,3 +137,22 @@ def run_jit(module):
     func_ptr = engine.get_function_address("main")
     import ctypes
     return ctypes.CFUNCTYPE(ctypes.c_double)(func_ptr)()
+
+
+
+
+
+
+
+
+from parser import parser, ASTBuilder
+
+expr = "(3 + 5) * 2"
+tree = parser.parse(expr)
+ast = ASTBuilder().transform(tree)
+
+cg = CodeGen()
+cg.compile(ast)
+print("LLVM IR:")
+print(cg.module)
+print("JIT Result:", run_jit(cg.module))
