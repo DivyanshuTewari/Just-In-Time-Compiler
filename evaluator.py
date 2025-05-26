@@ -111,4 +111,9 @@ def eval_numeric_node(node, context):
         if left.endswith(b'\x00'):
             left = left[:-1]
         return left + right
+        elif isinstance(node, IfElse):
+        cond = eval_numeric_node(node.cond, context)
+        return eval_string_node(node.then_expr if cond else node.else_expr, context)
+    raise RuntimeError("Not a string node")
+
     
