@@ -395,7 +395,8 @@ def jit_compile(expression, variables=None, debug=False):
     assembly.append("push rbp")
     assembly.append("mov rbp, rsp")
     assembly.append(f"sub rsp, {offset}")
-       for stmt in ast_list:
+
+    for stmt in ast_list:
         assembly += compile_ast(stmt, context)
 
     last = ast_list[-1]
@@ -421,7 +422,7 @@ def jit_compile(expression, variables=None, debug=False):
             addr = context['variables'][var]
             assembly.append(f"mov rax, [rbp - {addr}]")
 
-    assembly.append("mov rsp, rbp")//appending mov rsp and rbp
+    assembly.append("mov rsp, rbp")
     assembly.append("pop rbp")
     assembly.append("ret")
 
@@ -436,5 +437,3 @@ def jit_compile(expression, variables=None, debug=False):
     )
     func_type = ctypes.CFUNCTYPE(ctypes.c_uint64)
     return func_type(ctypes.addressof(buf))
-
- 

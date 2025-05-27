@@ -172,7 +172,7 @@ def p_error(p):
 parser = yacc.yacc(start='program')
 
 # --------------------------
-# String Buffer Management (unchanged)
+# String Buffer Management 
 # --------------------------
 STATIC_STRING_BUFFER_SIZE = 4096
 _static_string_buffer = ctypes.create_string_buffer(STATIC_STRING_BUFFER_SIZE)
@@ -714,7 +714,7 @@ EXAMPLES = [
     ("String", '"Hello, " + "World!"'),
     ("Assignment", "x = 5; x * 2"),
     ("String Variable", 's = "Python"; s + " rocks!"'),
-    ("Complex Math", "8*3*6*4*7-1-2-4+4+6*24*213*54"),
+    ("Precedence Implementation", "8*3*6*4*7-1-2-4+4+6*24*213*54"),
     ("Boolean Logic", "a = true; b = false; a && b"),
 ]
 
