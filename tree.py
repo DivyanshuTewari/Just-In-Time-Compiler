@@ -75,19 +75,15 @@ class ExpressionStmt:
 class ASTBuilder(Transformer):
     def number(self, n): return Number(float(n[0]))
     def var(self, name): return Variable(str(name[0]))
-    def add(self, items): return BinaryOp(items[0], '+', items[1])
-    def sub(self, items): return BinaryOp(items[0], '-', items[1])
-    def mul(self, items): return BinaryOp(items[0], '*', items[1])
-    def div(self, items): return BinaryOp(items[0], '/', items[1])
+   
     def assign(self, items): return Assignment(str(items[0]), items[1])
     def expr_stmt(self, items): return ExpressionStmt(items[0])
 
-from llvmlite import ir, binding
+
 
 class CodeGen:
     def __init__(self):
-        self.module = ir.Module(name="jit_module")
-        self.builder = None
+        
         self.func = None
         self.variables = {}
 
@@ -97,11 +93,9 @@ class CodeGen:
         block = self.func.append_basic_block(name="entry")
         self.builder = ir.IRBuilder(block)
 
-        result = None
-        for stmt in stmts:
-            result = self.codegen(stmt)
+   
 
-        self.builder.ret(result if result else ir.Constant(ir.DoubleType(), 0.0))
+        
 
     def codegen(self, node):
         if isinstance(node, Number):
@@ -117,16 +111,8 @@ class CodeGen:
             self.variables[node.name] = ptr
         elif isinstance(node, ExpressionStmt):
             return self.codegen(node.expr)
-        elif isinstance(node, BinaryOp):
-            l = self.codegen(node.left)
-            r = self.codegen(node.right)
-            ops = {
-                '+': self.builder.fadd,
-                '-': self.builder.fsub,
-                '*': self.builder.fmul,
-                '/': self.builder.fdiv
-            }
-            return ops[node.op](l, r)
+
+            
         else:
             raise TypeError(f"Unknown AST node: {type(node)}")
 
