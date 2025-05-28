@@ -80,11 +80,11 @@ def p_factor_bool(p):
 def p_factor_number(p):
     'factor : NUMBER'
     p[0] = Number(p[1])
-
+# id factor
 def p_factor_identifier(p):
     'factor : IDENTIFIER'
     p[0] = Identifier(p[1])
-
+# string factor
 def p_factor_string(p):
     'factor : STRING'
     p[0] = String(p[1])
@@ -93,7 +93,11 @@ def p_factor_expr(p):
     'factor : LPAREN expression RPAREN'
     p[0] = p[2]
 
+    # error printed here
+
 def p_error(p):
     print(f"Syntax error at '{getattr(p, 'value', '?')}'")
+
+    # last main call here
 
 parser = yacc.yacc(start='program')
