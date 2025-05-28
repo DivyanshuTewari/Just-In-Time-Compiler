@@ -51,6 +51,33 @@ class BinaryOp:
 
 
 
+from parser import parser, ASTBuilder
+
+def main():
+    print("Mini JIT REPL. Type `exit` to quit.")
+    source = ""
+
+    while True:
+        try:
+            line = input(">>> ")
+            if line.strip() == "exit": break
+            source += line + "\n"
+            tree = parser.parse(source)
+            ast = ASTBuilder().transform(tree)
+
+            cg = CodeGen()
+            cg.compile(ast)
+            print("LLVM IR:")
+            print(cg.module)
+            result = run_jit(cg.module)
+            print("Result:", result)
+
+            source = ""  # Reset after successful execution
+        except Exception as e:
+            print("Error:", e)
+
+if __name__ == "__main__":
+    main()
 
 
 
