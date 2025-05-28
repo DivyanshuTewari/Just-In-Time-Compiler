@@ -72,6 +72,15 @@ class Assignment:
 class ExpressionStmt:
     def __init__(self, expr): self.expr = expr
 
+class ASTBuilder(Transformer):
+    def number(self, n): return Number(float(n[0]))
+    def var(self, name): return Variable(str(name[0]))
+    def add(self, items): return BinaryOp(items[0], '+', items[1])
+    def sub(self, items): return BinaryOp(items[0], '-', items[1])
+    def mul(self, items): return BinaryOp(items[0], '*', items[1])
+    def div(self, items): return BinaryOp(items[0], '/', items[1])
+    def assign(self, items): return Assignment(str(items[0]), items[1])
+    def expr_stmt(self, items): return ExpressionStmt(items[0])
 
 
 
