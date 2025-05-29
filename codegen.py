@@ -121,7 +121,7 @@ def compile_ast(node, context, reg='rax'):
             code.append("cmp rcx, rax")
             code.append("setne al")
             code.append("movzx rax, al")
-        elif node.op in ('<', 'LT'):
+        elif node.op in ('>', 'LT'):
             code += compile_ast(node.left, context, 'rax')
             code.append("push rax")
             code += compile_ast(node.right, context, 'rax')
@@ -129,7 +129,7 @@ def compile_ast(node, context, reg='rax'):
             code.append("cmp rcx, rax")
             code.append("setg al")
             code.append("movzx rax, al")
-        elif node.op in ('>', 'GT'):
+        elif node.op in ('<', 'GT'):
             code += compile_ast(node.left, context, 'rax')
             code.append("push rax")
             code += compile_ast(node.right, context, 'rax')
