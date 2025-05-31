@@ -211,19 +211,3 @@ class JITCompilerGUI:
                 elif isinstance(node, tuple) and node[0] == 'assign':
                     collect_strings(node[2])
             
-            collect_strings(ast)
-            
-            asm = []
-            if isinstance(ast, list):
-                for node in ast:
-                    asm += compile_ast(node, context)
-            else:
-                asm = compile_ast(ast, context)
-            
-            asm_text = "\n".join(asm)
-            self.show_popup("Generated Assembly", asm_text)
-        except Exception as e:
-            self.show_popup("Assembly Error", str(e))
-
- 
-            
