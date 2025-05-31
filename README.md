@@ -12,6 +12,11 @@
 </p>
 ---
 
+## GUI 
+
+![Screenshot 2025-05-31 115756](https://github.com/user-attachments/assets/4db712d1-d460-44cf-9a20-1dcff5fb5321)
+
+
 ## 📦 Project Structure
 
 | File | Description |
