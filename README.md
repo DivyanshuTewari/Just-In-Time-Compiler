@@ -14,7 +14,8 @@
 
 ## GUI 
 
-![Screenshot 2025-05-31 115756](https://github.com/user-attachments/assets/4db712d1-d460-44cf-9a20-1dcff5fb5321)
+![image](https://github.com/user-attachments/assets/3df670d5-8246-4c67-802e-8badb5783f25)
+
 
 
 ## 📦 Project Structure
