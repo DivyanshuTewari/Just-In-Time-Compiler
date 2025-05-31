@@ -1,8 +1,15 @@
-
+<h1 align="center">🔥 JIT Compiler Playground</h1>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/placeholder/gui-example.png" alt="GUI Screenshot" width="700">
+  <b>Dynamic Expressions. Native Performance.</b><br>
+  A JIT compiler and interpreter for a mini expression language with full GUI, written in pure Python.
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.7+-blue" alt="Python Version">
+  <img src="https://img.shields.io/badge/platform-Windows%20x86__64-lightgrey">
+  <img src="https://img.shields.io/badge/jit-x86--64%20assembler-informational">
+  <img src="https://img.shields.io/badge/gui-built%20with%20Tkinter-orange">
+</p>
 ---
 
 ## 📦 Project Structure
