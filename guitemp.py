@@ -190,24 +190,4 @@ class JITCompilerGUI:
                 'var_offsets': {}
             }
             
-            # Preprocess all string literals for buffer allocation
-            def collect_strings(node):
-                if isinstance(node, String):
-                    if node.value not in context['string_buffer_offsets']:
-                        addr = allocate_static_string(node.value)
-                        context['string_buffer_offsets'][node.value] = addr
-                elif isinstance(node, BinOp):
-                    collect_strings(node.left)
-                    collect_strings(node.right)
-                elif isinstance(node, UnOp):
-                    collect_strings(node.val)
-                elif isinstance(node, IfElse):
-                    collect_strings(node.cond)
-                    collect_strings(node.then_expr)
-                    collect_strings(node.else_expr)
-                elif isinstance(node, list):
-                    for n in node:
-                        collect_strings(n)
-                elif isinstance(node, tuple) and node[0] == 'assign':
-                    collect_strings(node[2])
-            
+
